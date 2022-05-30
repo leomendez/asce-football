@@ -1,8 +1,17 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import styled from 'styled-components'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const queryClient = new QueryClient();
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Style>
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />
+    </QueryClientProvider>
+  </Style>
 }
 
-export default MyApp
+const Style = styled.div`
+  font-family: Helvetica;
+`
