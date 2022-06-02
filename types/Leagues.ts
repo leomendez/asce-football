@@ -18,7 +18,7 @@ export type Season = {
     start: string;
     end: string;
     current: boolean;
-    coverage: Coverage;
+    coverage?: Coverage;
 }
 
 

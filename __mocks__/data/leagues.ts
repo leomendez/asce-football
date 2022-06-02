@@ -2,28 +2,28 @@ import { LeagueResponse } from "../../types";
 
 export const leagues: LeagueResponse[] = [
     {
-        league: { name: 'Premier League', id: 1, type: 'type', logo: '/logo.url' },
-        country: { name: 'England', code: 'ENG', flag: '🇬🇧'},
-        season: { year: 2022, start: '06-06-2021', end: '06-06-2022', current: true }
+        league: { name: 'Premier League', id: 39, type: 'League', logo: 'https://media.api-sports.io/football/leagues/39.png' },
+        country: { name: 'England', code: 'GB', flag: 'https://media.api-sports.io/flags/gb.svg'},
+        season: { year: 2021, start: '2021-08-13', end: '2022-05-22', current: true }
     },
     {
-        league: { name: 'La Liga', id: 2, type: 'type', logo: '/logo.url' },
-        country: { name: 'Spain', code: 'SPA', flag: '🇪🇸'},
-        season: { year: 2022, start: '06-06-2021', end: '06-06-2022', current: true }
+        league: { name: 'La Liga', id: 140, type: 'League', logo: 'https://media.api-sports.io/football/leagues/140.png' },
+        country: { name: 'Spain', code: 'ES', flag: 'https://media.api-sports.io/flags/es.svg'},
+        season: { year: 2021, start: '2021-08-13', end: '2022-05-22', current: true }
     },
     {
-        league: { name: 'Bundesleague', id: 3, type: 'type', logo: '/logo.url' },
-        country: { name: 'Germany', code: 'GER', flag: '🇩🇪'},
-        season: { year: 2022, start: '06-06-2021', end: '06-06-2022', current: true }
+        league: { name: 'Bundesliga', id: 78, type: 'League', logo: 'https://media.api-sports.io/football/leagues/78.png' },
+        country: { name: 'Germany', code: 'DE', flag: 'https://media.api-sports.io/flags/de.svg'},
+        season: { year: 2021, start: '2021-08-13', end: '2022-05-22', current: true }
     },
     {
-        league: { name: 'League 1', id: 4, type: 'type', logo: '/logo.url' },
-        country: { name: 'France', code: 'FRA', flag: 'FR'},
-        season: { year: 2022, start: '06-06-2021', end: '06-06-2022', current: true }
+        league: { name: 'League 1', id: 61, type: 'League', logo: 'https://media.api-sports.io/football/leagues/61.png' },
+        country: { name: 'France', code: 'FR', flag: 'https://media.api-sports.io/flags/fr.svg'},
+        season: { year: 2021, start: '2021-08-13', end: '2022-05-22', current: true }
     },
     {
-        league: { name: 'Liga NOS', id: 5, type: 'type', logo: '/logo.url' },
-        country: { name: 'Portugal', code: 'POR', flag: 'PO'},
-        season: { year: 2022, start: '06-06-2021', end: '06-06-2022', current: true }
+        league: { name: 'Serie A', id: 135, type: 'League', logo: 'https://media.api-sports.io/football/leagues/135.png' },
+        country: { name: 'Italy', code: 'IT', flag: 'https://media.api-sports.io/flags/it.svg'},
+        season: { year: 2021, start: '2021-08-13', end: '2022-05-22', current: true }
     },
   ];

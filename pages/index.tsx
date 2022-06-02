@@ -1,16 +1,21 @@
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { getLeagues } from '../api/leagues'
-import { LeagueResponse } from '../types'
+import { getTeamsByLeagueIdAndSeasonId } from '../api/teams'
+import { LeagueResponse, TeamsResponse } from '../types'
 import { leagues as mockLeagues } from '../__mocks__/data/leagues'
+import { teams as mockTeams } from '../__mocks__/data/teams'
 
 type Props = {
   leagues: LeagueResponse[];
+  teams?: any
 }
 
-const Home: NextPage<Props> = ({ leagues }) => {
+const Home: NextPage<Props> = ({ leagues, teams }) => {  
 
   return (
     <div >
@@ -22,6 +27,14 @@ const Home: NextPage<Props> = ({ leagues }) => {
 
       <main>
         <h1>Asce Football</h1>
+        <h2>Teams</h2>
+        <ul>
+          <li>
+            <Link href="team/541">
+              <a>Real Madrid</a>
+            </Link>
+          </li>
+        </ul>
         <ul>
           {leagues?.map(item => (
             <li key={item.league.id}>
@@ -41,13 +54,16 @@ const Home: NextPage<Props> = ({ leagues }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
 
   // const leagues = await getLeagues();
   const leagues: LeagueResponse[] = mockLeagues;
 
+  // const teams = await getTeamsByLeagueIdAndSeasonId(140, 2021);
+  const teams: TeamsResponse[] = mockTeams;
+  
   return {
-    props: { leagues }, // will be passed to the page component as props
+    props: { leagues, teams }, // will be passed to the page component as props
   }
 }
 
