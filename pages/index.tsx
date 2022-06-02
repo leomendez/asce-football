@@ -1,23 +1,16 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useQuery, useQueryClient } from 'react-query'
 import { getLeagues } from '../api/leagues'
 import { LeagueResponse } from '../types'
+import { leagues as mockLeagues } from '../__mocks__/data/leagues'
 
-const Home: NextPage = () => {
+type Props = {
+  leagues: LeagueResponse[];
+}
 
-  const queryCLient = useQueryClient()
-
-  const query = useQuery<LeagueResponse[], Error>('leagues', getLeagues)
-  
-  if(query.isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if(query.isError) {
-    return <div>Error...</div>
-  }
+const Home: NextPage<Props> = ({ leagues }) => {
 
   return (
     <div >
@@ -30,7 +23,7 @@ const Home: NextPage = () => {
       <main>
         <h1>Asce Football</h1>
         <ul>
-          {query?.data?.map(item => (
+          {leagues?.map(item => (
             <li key={item.league.id}>
               <Image 
                 src={item.league.logo} 
@@ -46,6 +39,16 @@ const Home: NextPage = () => {
 
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+
+  // const leagues = await getLeagues();
+  const leagues: LeagueResponse[] = mockLeagues;
+
+  return {
+    props: { leagues }, // will be passed to the page component as props
+  }
 }
 
 export default Home
