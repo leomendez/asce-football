@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 
-type HeaderProps = {
+type NavbarProps = {
     
 }
 
-export default function Header({  }: HeaderProps) {
+export default function Navbar({  }: NavbarProps) {
     return (
         <Main>
             <Link href="/" ><Title>ASCE FOOTBALL</Title></Link>
