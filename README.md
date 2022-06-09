@@ -2,7 +2,7 @@
 
 Next JS app that shows football stats using [api-football](https://www.api-football.com/documenttation-v3)
 
-### This project is a work in progress
+### This project is a work in progress :construction:
 
 ### Todo
 
@@ -10,5 +10,4 @@ Next JS app that shows football stats using [api-football](https://www.api-footb
 [ ] Make Fixtures Component  
 [ ] Make Results Component  
 [ ] Make Transfers Component  
-[ ] Deploy to Vercel  
-
+[ ] Deploy to Vercel
