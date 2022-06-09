@@ -6,9 +6,9 @@ Next JS app that shows football stats using [api-football](https://www.api-footb
 
 ### Todo
 
-[ ] Add unit tests 
-[ ] Make Fixtures Component
-[ ] Make Results Component
-[ ] Make Transfers Component
-[ ] Deploy to Vercel
+[ ] Add unit tests  
+[ ] Make Fixtures Component  
+[ ] Make Results Component  
+[ ] Make Transfers Component  
+[ ] Deploy to Vercel  
 
