@@ -14,7 +14,6 @@ type TeamProps = {
 
 const TeamPage = ({ team, venue }: TeamProps) => {
 
-  console.log({team, venue})
   return (
     <div>
       <Title>
