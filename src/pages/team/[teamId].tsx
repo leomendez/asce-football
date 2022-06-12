@@ -1,11 +1,17 @@
-import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
-import styled from "styled-components";
-import { getTeamById } from "../../api/teams";
-import TeamInfo from "../../components/TeamInfo/TeamInfo";
-import TeamLogo from "../../components/TeamLogo";
-import { Team, Venue } from "../../types";
-import { teams } from "../../__mocks__/data/teams";
+import { GetStaticPaths, GetStaticProps } from 'next';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import styled from 'styled-components';
+import {
+  getLastFixturesByTeamId,
+  getNextFixturesByTeamId,
+} from '../../api/fixtures';
+import { getTeamById } from '../../api/teams';
+import TeamInfo from '../../components/TeamInfo/TeamInfo';
+import TeamLogo from '../../components/TeamLogo';
+import { Team, Venue } from '../../types';
+import { teams } from '../../__mocks__/data/teams';
 
 type TeamProps = {
   team: Team;
@@ -13,6 +19,12 @@ type TeamProps = {
 };
 
 const TeamPage = ({ team, venue }: TeamProps) => {
+  // useEffect(() => {
+  //   if (team.id) {
+  //     getLastFixturesByTeamId(team.id)
+  //   }
+  // }, [team.id])
+
   return (
     <div>
       <Title>
@@ -35,6 +47,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   let team = teams[0].team;
   let venue = teams[0].venue;
+  let fixtures = [];
+
+  // if (id && typeof id === 'string') {
+  //   fixtures = await getFixturesByTeamId(id);
+  //   console.log({ fixtures });
+  // }
 
   // if (id && typeof id == 'string'){
   //   const teams = await getTeamById(id)
@@ -51,7 +69,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { teamId: "541" } }],
+    paths: [{ params: { teamId: '541' } }],
     fallback: true,
   };
 };
