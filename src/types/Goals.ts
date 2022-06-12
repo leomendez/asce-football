@@ -1,4 +1,4 @@
 export type Goals = {
-  home?: number;
-  away?: number;
-}
+  home?: number | null;
+  away?: number | null;
+};

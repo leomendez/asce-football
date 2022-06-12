@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import {
@@ -8,22 +8,56 @@ import {
   getNextFixturesByTeamId,
 } from '../../api/fixtures';
 import { getTeamById } from '../../api/teams';
-import TeamInfo from '../../components/TeamInfo/TeamInfo';
-import TeamLogo from '../../components/TeamLogo';
+import Fixtures from '../../components/Fixtures/Fixtures';
+import { TeamInfo, TeamLogo } from '../../components/index';
 import { Team, Venue } from '../../types';
+import { FixtureResponse } from '../../types/Fixture';
+import { fixtures as mockFixtures } from '../../__mocks__/data/fixtures';
 import { teams } from '../../__mocks__/data/teams';
 
 type TeamProps = {
   team: Team;
   venue: Venue;
+  fixtures: FixtureResponse[];
 };
 
-const TeamPage = ({ team, venue }: TeamProps) => {
+const TABS = {
+  INFO: 'info',
+  FIXTURES: 'fixtures',
+  RESULTS: 'results',
+};
+
+const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
   // useEffect(() => {
   //   if (team.id) {
   //     getLastFixturesByTeamId(team.id)
   //   }
   // }, [team.id])
+
+  const [isInfo, setIsInfo] = useState(false);
+  const [isFixtures, setIsFixtures] = useState(true);
+
+  const getBody = () => {
+    if (isFixtures) {
+      return <Fixtures fixtures={fixtures} />;
+    }
+
+    return <TeamInfo team={team} venue={venue} />;
+  };
+
+  const handleTabChange = (tab: string) => {
+    switch (tab) {
+      case TABS.FIXTURES:
+        setIsInfo(false);
+        setIsFixtures(true);
+        break;
+
+      default:
+        setIsFixtures(false);
+        setIsInfo(true);
+        break;
+    }
+  };
 
   return (
     <div>
@@ -32,12 +66,12 @@ const TeamPage = ({ team, venue }: TeamProps) => {
         <TeamName>{team.name}</TeamName>
       </Title>
       <Tabs>
-        <Tab>Info</Tab>
-        <Tab>Fixtures</Tab>
+        <Tab onClick={() => handleTabChange(TABS.INFO)}>Info</Tab>
+        <Tab onClick={() => handleTabChange(TABS.FIXTURES)}>Fixtures</Tab>
         <Tab>Results</Tab>
       </Tabs>
       <hr />
-      <TeamInfo team={team} venue={venue} />
+      {getBody()}
     </div>
   );
 };
@@ -47,7 +81,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   let team = teams[0].team;
   let venue = teams[0].venue;
-  let fixtures = [];
+  let fixtures: FixtureResponse[] = mockFixtures;
 
   // if (id && typeof id === 'string') {
   //   fixtures = await getFixturesByTeamId(id);
@@ -63,7 +97,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   // }
 
   return {
-    props: { team, venue }, // will be passed to the page component as props
+    props: { team, venue, fixtures }, // will be passed to the page component as props
   };
 };
 

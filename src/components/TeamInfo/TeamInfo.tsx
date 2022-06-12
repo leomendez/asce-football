@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Team, Venue } from '../../types';
 import InfoItem from './InfoItem';
@@ -8,7 +9,7 @@ type TeamInfoProps = {
   venue: Venue;
 };
 
-export default function TeamInfo({ team, venue }: TeamInfoProps) {
+export default function TeamInfo({ team, venue }: TeamInfoProps): ReactElement {
   return (
     <Main>
       <h3>Info</h3>

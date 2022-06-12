@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import {Navbar} from "../components/";
 
 const queryClient = new QueryClient();
 

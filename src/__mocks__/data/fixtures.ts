@@ -36,6 +36,38 @@ export const fixtures: FixtureResponse[] = [
       round: 'Final',
       season: 2021,
     },
+    score: {
+      extratime: {
+        home: null,
+        away: null,
+      },
+      halftime: {
+        home: 0,
+        away: 0,
+      },
+      fulltime: {
+        home: 0,
+        away: 1,
+      },
+      penalty: {
+        home: null,
+        away: null,
+      },
+    },
+    teams: {
+      away: {
+        id: 541,
+        logo: 'https://media.api-sports.io/football/teams/541.png',
+        name: 'Real Madrid',
+        winner: true,
+      },
+      home: {
+        id: 40,
+        logo: 'https://media.api-sports.io/football/teams/40.png',
+        name: 'Liverpool',
+        winner: false,
+      },
+    },
   },
   {
     fixture: {
@@ -71,6 +103,38 @@ export const fixtures: FixtureResponse[] = [
       name: 'UEFA Champions League',
       round: 'Final',
       season: 2021,
+    },
+    score: {
+      extratime: {
+        home: null,
+        away: null,
+      },
+      halftime: {
+        home: 0,
+        away: 0,
+      },
+      fulltime: {
+        home: 0,
+        away: 1,
+      },
+      penalty: {
+        home: null,
+        away: null,
+      },
+    },
+    teams: {
+      away: {
+        id: 541,
+        logo: 'https://media.api-sports.io/football/teams/541.png',
+        name: 'Real Madrid',
+        winner: true,
+      },
+      home: {
+        id: 40,
+        logo: 'https://media.api-sports.io/football/teams/40.png',
+        name: 'Liverpool',
+        winner: false,
+      },
     },
   },
 ];

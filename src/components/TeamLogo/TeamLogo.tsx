@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ReactElement } from "react";
 import styled from "styled-components";
 
 type TeamLogoProps = {
@@ -6,7 +7,7 @@ type TeamLogoProps = {
     alt: string
 }
 
-export default function TeamLogo({ src, alt }: TeamLogoProps) {
+export default function TeamLogo({ src, alt }: TeamLogoProps): ReactElement {
     return (
         <Logo>
             <Image 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ReactElement } from "react";
 import styled from "styled-components";
 import { Team, Venue } from "../../types";
 
@@ -8,7 +9,7 @@ type InfoItemProps = {
 }
 
 
-export default function InfoItem({ label, value }: InfoItemProps) {
+export default function InfoItem({ label, value }: InfoItemProps): ReactElement {
     return (
         <Item>
             <span><b>{label}:</b></span>
