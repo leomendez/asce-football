@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
+import moment from 'moment-timezone';
 import styled from 'styled-components';
 import { FixtureResponse } from '../../types/Fixture';
 
@@ -8,50 +9,84 @@ type FixtureProps = {
 };
 
 export default function Fixture({ fixture }: FixtureProps): ReactElement {
+  const getTimeText = useMemo(
+    () => () => {
+      switch (fixture.fixture?.status?.short) {
+        case 'FT':
+          return 'Full Time';
+        default:
+          return moment(fixture.fixture?.timestamp)
+            .tz('America/Los_Angeles')
+            .format('hh:mm z');
+      }
+    },
+    [fixture.fixture?.status?.short, fixture.fixture?.timestamp]
+  );
+
   return (
     <Box>
-      <Teams>
-        <Team>
-          <Logo>
-            <Image
-              src={fixture.teams?.home?.logo || ''}
-              width="18px"
-              height="18px"
-              alt="home-logo"
-            />
-          </Logo>
-          <TeamName>{fixture.teams?.home?.name}</TeamName>
-          <Score>{fixture.score?.fulltime?.home}</Score>
-        </Team>
-        <Team>
-          <Logo>
-            <Image
-              src={fixture.teams?.away?.logo || ''}
-              width="18px"
-              height="18px"
-              alt="home-logo"
-            />
-          </Logo>
-          <TeamName>{fixture.teams?.away?.name}</TeamName>
-          <Score>{fixture.score?.fulltime?.away}</Score>
-        </Team>
-      </Teams>
-      <div>{fixture.fixture?.status?.short}</div>
+      <TopSection>
+        <Teams>
+          <Team>
+            <Logo>
+              <Image
+                src={fixture.teams?.home?.logo || ''}
+                width="18px"
+                height="18px"
+                alt="home-logo"
+              />
+            </Logo>
+            <TeamName>{fixture.teams?.home?.name}</TeamName>
+            <Score>{fixture.score?.fulltime?.home}</Score>
+          </Team>
+          <Team>
+            <Logo>
+              <Image
+                src={fixture.teams?.away?.logo || ''}
+                width="18px"
+                height="18px"
+                alt="home-logo"
+              />
+            </Logo>
+            <TeamName>{fixture.teams?.away?.name}</TeamName>
+            <Score>{fixture.score?.fulltime?.away}</Score>
+          </Team>
+        </Teams>
+        <TimeSection>
+          <div>
+            {moment(fixture.fixture?.date)
+              .tz('America/Los_Angeles')
+              .format('DD/MM/YYYY')}
+          </div>
+          <div>{getTimeText()}</div>
+        </TimeSection>
+      </TopSection>
+      <BottomSection>{fixture.league?.name}</BottomSection>
     </Box>
   );
 }
 
 const Box = styled.div`
   display: flex;
-  margin: 1em 0;
-  width: 250px;
-  // height: 100px;
+  flex-direction: column;
+  margin: 1em 1em 1em 0;
   background: blue;
   color: white;
   cursor: pointer;
   :hover {
     border: solid 2px red;
   }
+`;
+
+const TopSection = styled.div`
+  display: flex;
+  border-bottom: 1px solid white;
+`;
+
+const BottomSection = styled.div`
+  padding: 1em;
+  font-size: .8em;
+  font-weight: 600;
 `;
 
 const Teams = styled.div`
@@ -80,4 +115,17 @@ const TeamName = styled.span`
 const Score = styled.span`
   display: flex;
   justify-content: flex-end;
+`;
+
+const TimeSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 2px solid white;
+  margin: 0.5em 0;
+  padding: 0 1em;
+  font-size: .8em;
+  font-weight: 600;
+  width: 100%:
 `;

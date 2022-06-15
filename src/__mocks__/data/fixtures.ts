@@ -81,7 +81,7 @@ export const fixtures: FixtureResponse[] = [
       status: {
         elapsed: 90,
         long: 'Match Finished',
-        short: 'FT',
+        short: 'MEH',
       },
       timestamp: 1653764400,
       timezone: 'UTC',
