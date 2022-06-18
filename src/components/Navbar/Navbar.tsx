@@ -2,10 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
+import { Switch } from '../';
 
-type NavbarProps = {};
+type NavbarProps = {
+  darkMode?: boolean;
+  toggleDarkMode?: () => void;
+};
 
-export default function Navbar({}: NavbarProps): ReactElement {
+export default function Navbar({darkMode, toggleDarkMode}: NavbarProps): ReactElement {
   return (
     <Main>
       <Link href="/">
@@ -15,6 +19,7 @@ export default function Navbar({}: NavbarProps): ReactElement {
         <Link href="/">
           <HeaderLink>Home</HeaderLink>
         </Link>
+        <Switch name="theme-switch" checked={darkMode || false} onChange={toggleDarkMode} />
       </Links>
     </Main>
   );
@@ -28,10 +33,11 @@ const Title = styled.a`
 
 const Links = styled.div`
   font-weight: 700;
+  display: flex;
+  gap: 10px;
 `;
 
 const HeaderLink = styled.a`
-  color: black;
   text-decoration: none;
   cursor: pointer;
 `;

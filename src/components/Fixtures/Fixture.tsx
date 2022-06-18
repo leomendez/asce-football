@@ -76,6 +76,9 @@ const Box = styled.div`
   :hover {
     border: solid 2px red;
   }
+  @media screen and (max-width: 600px) {
+    margin: 1em 0;
+  }
 `;
 
 const TopSection = styled.div`
@@ -85,7 +88,7 @@ const TopSection = styled.div`
 
 const BottomSection = styled.div`
   padding: 1em;
-  font-size: .8em;
+  font-size: 0.8em;
   font-weight: 600;
 `;
 
