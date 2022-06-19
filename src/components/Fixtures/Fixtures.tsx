@@ -24,11 +24,12 @@ export default function Fixtures({ fixtures }: FixtureProps): ReactElement {
 
 const FixtureWrapper = styled.div`
   display: flex;
-  @media screen and (max-width: 600px) {
+  flex-wrap: wrap;
+  @media screen and (max-width: 670px) {
     flex-direction: column;
   }
 `;
 
-const Main = styled.main`
+const Main = styled.div`
   margin: 1em;
 `;

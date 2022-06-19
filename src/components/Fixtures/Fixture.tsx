@@ -15,12 +15,12 @@ export default function Fixture({ fixture }: FixtureProps): ReactElement {
         case 'FT':
           return 'Full Time';
         default:
-          return moment(fixture.fixture?.timestamp)
+          return moment(fixture.fixture?.date)
             .tz('America/Los_Angeles')
             .format('hh:mm z');
       }
     },
-    [fixture.fixture?.status?.short, fixture.fixture?.timestamp]
+    [fixture.fixture?.status?.short, fixture.fixture?.date]
   );
 
   return (
@@ -61,7 +61,17 @@ export default function Fixture({ fixture }: FixtureProps): ReactElement {
           <div>{getTimeText()}</div>
         </TimeSection>
       </TopSection>
-      <BottomSection>{fixture.league?.name}</BottomSection>
+      <BottomSection>
+        <Logo>
+          <Image
+            src={fixture.league?.logo || ''}
+            width="14px"
+            height="14px"
+            alt="home-logo"
+          />
+        </Logo>
+        {fixture.league?.name}
+      </BottomSection>
     </Box>
   );
 }
@@ -78,7 +88,7 @@ const Box = styled.div`
     border: solid 3px ${({ theme }) => theme.fontColor};
     transition: 200ms all;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 670px) {
     margin: 1em 0;
   }
 `;
@@ -89,6 +99,8 @@ const TopSection = styled.div`
 `;
 
 const BottomSection = styled.div`
+  display: flex;
+  align-items: center;
   padding: 1em;
   font-size: 0.8em;
   font-weight: 600;
@@ -114,7 +126,7 @@ const Team = styled.div`
 `;
 
 const TeamName = styled.span`
-  width: 100px;
+  width: 150px;
 `;
 
 const Score = styled.span`

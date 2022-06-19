@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 import { ReactNode, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
@@ -19,6 +19,7 @@ type TeamProps = {
   team: Team;
   venue: Venue;
   fixtures: FixtureResponse[];
+  results: FixtureResponse[];
 };
 
 const TABS = {
@@ -27,7 +28,7 @@ const TABS = {
   RESULTS: 'results',
 };
 
-const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
+const TeamPage = ({ team, venue, fixtures, results }: TeamProps) => {
   // useEffect(() => {
   //   if (team.id) {
   //     getLastFixturesByTeamId(team.id)
@@ -37,11 +38,15 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
   const [activeTab, setActiveTab] = useState(TABS.INFO);
 
   const getBody = () => {
-    if (activeTab === TABS.FIXTURES) {
-      return <Fixtures fixtures={fixtures} />;
+    switch (activeTab) {
+      case TABS.FIXTURES:
+        return <Fixtures fixtures={fixtures} />;
+      case TABS.RESULTS:
+        return <Fixtures fixtures={results} />;
+      case TABS.INFO:
+      default:
+        return <TeamInfo team={team} venue={venue} />;
     }
-
-    return <TeamInfo team={team} venue={venue} />;
   };
 
   const handleTabChange = (tab: string) => {
@@ -49,7 +54,10 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
       case TABS.FIXTURES:
         setActiveTab(TABS.FIXTURES);
         break;
-
+      case TABS.RESULTS:
+        setActiveTab(TABS.RESULTS);
+        break;
+      case TABS.INFO:
       default:
         setActiveTab(TABS.INFO);
         break;
@@ -63,9 +71,24 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
         <TeamName>{team.name}</TeamName>
       </Title>
       <Tabs>
-        <Tab onClick={() => handleTabChange(TABS.INFO)}>Info</Tab>
-        <Tab onClick={() => handleTabChange(TABS.FIXTURES)}>Fixtures</Tab>
-        <Tab>Results</Tab>
+        <Tab
+          onClick={() => handleTabChange(TABS.INFO)}
+          active={activeTab === TABS.INFO}
+        >
+          Info
+        </Tab>
+        <Tab
+          onClick={() => handleTabChange(TABS.FIXTURES)}
+          active={activeTab === TABS.FIXTURES}
+        >
+          Fixtures
+        </Tab>
+        <Tab
+          onClick={() => handleTabChange(TABS.RESULTS)}
+          active={activeTab === TABS.RESULTS}
+        >
+          Results
+        </Tab>
       </Tabs>
       <hr />
       {getBody()}
@@ -73,36 +96,66 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.teamId;
 
   let team = teams[0].team;
   let venue = teams[0].venue;
-  let fixtures: FixtureResponse[] = mockFixtures;
+  let fixtures = mockFixtures;
+  let results = mockFixtures;
 
-  // if (id && typeof id === 'string') {
-  //   fixtures = await getFixturesByTeamId(id);
-  //   console.log({ fixtures });
-  // }
+  if (id && typeof id === 'string') {
+    fixtures = await getNextFixturesByTeamId(id);
+    results = await getLastFixturesByTeamId(id);
+  }
 
-  // if (id && typeof id == 'string'){
-  //   const teams = await getTeamById(id)
-  //   if (teams.length > 0) {
-  //     team = teams[0].team;
-  //     venue = teams[0].venue;
-  //   }
-  // }
+  if (id && typeof id == 'string') {
+    const teams = await getTeamById(id);
+    if (teams.length > 0) {
+      team = teams[0].team;
+      venue = teams[0].venue;
+    }
+  }
 
   return {
-    props: { team, venue, fixtures }, // will be passed to the page component as props
+    props: { team, venue, fixtures, results }, // will be passed to the page component as props
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [{ params: { teamId: '541' } }],
-    fallback: true,
-  };
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const id = context?.params?.teamId;
+
+//   let team = teams[0].team;
+//   let venue = teams[0].venue;
+//   let fixtures: FixtureResponse[] = mockFixtures;
+
+//   // if (id && typeof id === 'string') {
+//   //   fixtures = await getFixturesByTeamId(id);
+//   //   console.log({ fixtures });
+//   // }
+
+//   // if (id && typeof id == 'string'){
+//   //   const teams = await getTeamById(id)
+//   //   if (teams.length > 0) {
+//   //     team = teams[0].team;
+//   //     venue = teams[0].venue;
+//   //   }
+//   // }
+
+//   return {
+//     props: { team, venue, fixtures }, // will be passed to the page component as props
+//   };
+// };
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   return {
+//     paths: [{ params: { teamId: '541' } }],
+//     fallback: true,
+//   };
+// };
+
+type StyleProps = {
+  active: boolean;
 };
 
 const Title = styled.div`
@@ -127,17 +180,19 @@ const Tabs = styled.div`
   margin: 0 1em;
 `;
 
-const Tab = styled.div`
+const Tab = styled.div<StyleProps>`
   cursor: pointer;
   display: inline-block;
   position: relative;
+  ${({ active, theme }) =>
+    active && `border-bottom: solid 3px ${theme.secondary};`}
   &:after {
     content: '';
     position: absolute;
     width: 100%;
     transform: scaleX(0);
     height: 3px;
-    bottom: -10px;
+    bottom: 0;
     left: 0;
     background-color: ${({ theme }) => theme.secondary};
     transform-origin: bottom right;
