@@ -9,17 +9,17 @@ import {
 
 export const DARK_THEME: DefaultTheme = {
   background: oxfordBlue,
-  primary: imperialRed,
-  secondary: powderBlue,
-  aux: charcoal,
+  primary: charcoal,
+  secondary: imperialRed,
+  aux: powderBlue,
   fontColor: honeydew,
   font: 'Helvetica',
 };
 
 export const LIGHT_THEME: DefaultTheme = {
   background: honeydew,
-  primary: imperialRed,
-  secondary: powderBlue,
+  primary: powderBlue,
+  secondary: imperialRed,
   aux: charcoal,
   fontColor: oxfordBlue,
   font: 'Helvetica',

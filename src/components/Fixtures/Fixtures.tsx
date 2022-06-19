@@ -11,14 +11,14 @@ export default function Fixtures({ fixtures }: FixtureProps): ReactElement {
   console.log({ fixtures });
 
   return (
-    <div>
+    <Main>
       <h3>Season schedule</h3>
       <FixtureWrapper>
         {fixtures.map((fixture) => {
           return <Fixture key={fixture.fixture?.id} fixture={fixture} />;
         })}
       </FixtureWrapper>
-    </div>
+    </Main>
   );
 }
 
@@ -27,4 +27,8 @@ const FixtureWrapper = styled.div`
   @media screen and (max-width: 600px) {
     flex-direction: column;
   }
+`;
+
+const Main = styled.main`
+  margin: 1em;
 `;

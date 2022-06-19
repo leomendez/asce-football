@@ -70,11 +70,13 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1em 1em 1em 0;
-  background: blue;
-  color: white;
+  background: ${({ theme }) => theme.primary};
   cursor: pointer;
+  border-radius: 5px;
+  transition: 200ms all;
   :hover {
-    border: solid 2px red;
+    border: solid 3px ${({ theme }) => theme.fontColor};
+    transition: 200ms all;
   }
   @media screen and (max-width: 600px) {
     margin: 1em 0;
@@ -83,7 +85,7 @@ const Box = styled.div`
 
 const TopSection = styled.div`
   display: flex;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid ${({ theme }) => theme.fontColor};
 `;
 
 const BottomSection = styled.div`
@@ -125,7 +127,7 @@ const TimeSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-left: 2px solid white;
+  border-left: 2px solid ${({ theme }) => theme.fontColor};
   margin: 0.5em 0;
   padding: 0 1em;
   font-size: .8em;

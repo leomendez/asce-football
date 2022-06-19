@@ -127,10 +127,29 @@ const Tabs = styled.div`
   font-weight: 700;
   justify-content: flex-start;
   gap: 1em;
+  margin: 0 1em;
 `;
 
 const Tab = styled.div`
   cursor: pointer;
+  display: inline-block;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: -10px;
+    left: 0;
+    background-color: ${({ theme }) => theme.secondary};
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 `;
 
 export default TeamPage;

@@ -31,7 +31,7 @@ const SwitchElement = styled.div`
   position: relative;
   width: 32px;
   height: 14px;
-  background: ${({ theme }) => theme.aux};
+  background: ${({ theme }) => theme.primary};
   border-radius: 16px;
   padding: 4px;
   transition: 300ms all;
