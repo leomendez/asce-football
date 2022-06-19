@@ -18,16 +18,18 @@ export default function Navbar({
       <Link href="/">
         <Title>ASCE FOOTBALL</Title>
       </Link>
-      <Links>
-        <Link href="/">
-          <StyledLink>Home</StyledLink>
-        </Link>
+      <RightSection>
+        <Links>
+          <Link href="/">
+            <StyledLink>Home</StyledLink>
+          </Link>
+        </Links>
         <Switch
           name="theme-switch"
           checked={darkMode || false}
           onChange={toggleDarkMode}
         />
-      </Links>
+      </RightSection>
     </Main>
   );
 }
@@ -40,6 +42,11 @@ const Title = styled.a`
 
 const Links = styled.div`
   font-weight: 700;
+  display: flex;
+  gap: 10px;
+`;
+
+const RightSection = styled.div`
   display: flex;
   gap: 10px;
 `;

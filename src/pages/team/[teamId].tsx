@@ -29,12 +29,6 @@ const TABS = {
 };
 
 const TeamPage = ({ team, venue, fixtures, results }: TeamProps) => {
-  // useEffect(() => {
-  //   if (team.id) {
-  //     getLastFixturesByTeamId(team.id)
-  //   }
-  // }, [team.id])
-
   const [activeTab, setActiveTab] = useState(TABS.INFO);
 
   const getBody = () => {
@@ -107,9 +101,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (id && typeof id === 'string') {
     fixtures = await getNextFixturesByTeamId(id);
     results = await getLastFixturesByTeamId(id);
-  }
-
-  if (id && typeof id == 'string') {
     const teams = await getTeamById(id);
     if (teams.length > 0) {
       team = teams[0].team;
@@ -121,38 +112,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: { team, venue, fixtures, results }, // will be passed to the page component as props
   };
 };
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const id = context?.params?.teamId;
-
-//   let team = teams[0].team;
-//   let venue = teams[0].venue;
-//   let fixtures: FixtureResponse[] = mockFixtures;
-
-//   // if (id && typeof id === 'string') {
-//   //   fixtures = await getFixturesByTeamId(id);
-//   //   console.log({ fixtures });
-//   // }
-
-//   // if (id && typeof id == 'string'){
-//   //   const teams = await getTeamById(id)
-//   //   if (teams.length > 0) {
-//   //     team = teams[0].team;
-//   //     venue = teams[0].venue;
-//   //   }
-//   // }
-
-//   return {
-//     props: { team, venue, fixtures }, // will be passed to the page component as props
-//   };
-// };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   return {
-//     paths: [{ params: { teamId: '541' } }],
-//     fallback: true,
-//   };
-// };
 
 type StyleProps = {
   active: boolean;
