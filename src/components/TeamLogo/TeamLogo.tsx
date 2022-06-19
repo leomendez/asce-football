@@ -16,7 +16,7 @@ export default function TeamLogo({ src, alt }: TeamLogoProps): ReactElement {
 }
 
 const Logo = styled.div`
-  border: 1px solid ${({ theme }) => theme.font};
+  border: 1px solid ${({ theme }) => theme.fontColor};
   border-radius: 50%;
   padding: 0.5em;
 `;

@@ -9,7 +9,10 @@ type NavbarProps = {
   toggleDarkMode?: () => void;
 };
 
-export default function Navbar({darkMode, toggleDarkMode}: NavbarProps): ReactElement {
+export default function Navbar({
+  darkMode,
+  toggleDarkMode,
+}: NavbarProps): ReactElement {
   return (
     <Main>
       <Link href="/">
@@ -17,9 +20,13 @@ export default function Navbar({darkMode, toggleDarkMode}: NavbarProps): ReactEl
       </Link>
       <Links>
         <Link href="/">
-          <HeaderLink>Home</HeaderLink>
+          <StyledLink>Home</StyledLink>
         </Link>
-        <Switch name="theme-switch" checked={darkMode || false} onChange={toggleDarkMode} />
+        <Switch
+          name="theme-switch"
+          checked={darkMode || false}
+          onChange={toggleDarkMode}
+        />
       </Links>
     </Main>
   );
@@ -37,10 +44,33 @@ const Links = styled.div`
   gap: 10px;
 `;
 
-const HeaderLink = styled.a`
+const StyledLink = styled.a`
   text-decoration: none;
   cursor: pointer;
+  display: inline-block;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: ${({ theme }) => theme.secondary};
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 `;
+
+// const HeaderLink = styled.a`
+//   text-decoration: none;
+//   cursor: pointer;
+// `;
 
 const Main = styled.div`
   display: flex;

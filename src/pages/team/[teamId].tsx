@@ -34,11 +34,10 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
   //   }
   // }, [team.id])
 
-  const [isInfo, setIsInfo] = useState(false);
-  const [isFixtures, setIsFixtures] = useState(true);
+  const [activeTab, setActiveTab] = useState(TABS.INFO);
 
   const getBody = () => {
-    if (isFixtures) {
+    if (activeTab === TABS.FIXTURES) {
       return <Fixtures fixtures={fixtures} />;
     }
 
@@ -48,13 +47,11 @@ const TeamPage = ({ team, venue, fixtures }: TeamProps) => {
   const handleTabChange = (tab: string) => {
     switch (tab) {
       case TABS.FIXTURES:
-        setIsInfo(false);
-        setIsFixtures(true);
+        setActiveTab(TABS.FIXTURES);
         break;
 
       default:
-        setIsFixtures(false);
-        setIsInfo(true);
+        setActiveTab(TABS.INFO);
         break;
     }
   };
@@ -112,7 +109,7 @@ const Title = styled.div`
   display: flex;
   gap: 2em;
   align-items: center;
-  margin: 2em;
+  margin: 2em 1em;
 `;
 
 const TeamName = styled.div`
