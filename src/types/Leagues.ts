@@ -5,6 +5,9 @@ export type League = {
   name: string;
   type?: string;
   logo: string;
+  country?: string;
+  flag?: string | null;
+  season?: number;
 };
 
 export type Country = {

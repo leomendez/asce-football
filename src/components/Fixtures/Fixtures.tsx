@@ -36,9 +36,7 @@ export default function Fixtures({ fixtures }: FixtureProps): ReactElement {
         <div>{month}</div>
         <FixturesInMonth>
           {getFixtureForMonth(month).map((fixture) => (
-            <>
               <Fixture key={fixture.fixture?.id} fixture={fixture} />
-            </>
           ))}
         </FixturesInMonth>
       </MonthSection>

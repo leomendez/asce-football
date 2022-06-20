@@ -5,12 +5,19 @@ import styled from 'styled-components';
 type TeamLogoProps = {
   src: string;
   alt: string;
+  width?: string;
+  height?: string;
 };
 
-export default function TeamLogo({ src, alt }: TeamLogoProps): ReactElement {
+export default function TeamLogo({
+  src,
+  alt,
+  width,
+  height,
+}: TeamLogoProps): ReactElement {
   return (
     <Logo>
-      <Image src={src} alt={alt} width={64} height={64} />
+      <Image src={src} alt={alt} width={width || 64} height={height || 64} />
     </Logo>
   );
 }

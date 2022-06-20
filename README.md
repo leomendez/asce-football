@@ -7,8 +7,8 @@ Next JS app that shows football stats using [api-football](https://www.api-footb
 ## Todo
 
 - [x] Add unit tests  
-- [ ] Make Fixtures Component  
-- [ ] Make Results Component  
+- [x] Make Fixtures Component  
+- [x] Make Results Component  
 - [ ] Make Transfers Component  
 - [ ] Add styling + transitions
 - [ ] Deploy to Vercel
