@@ -1,8 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Switch } from '../';
+import { Anchor, Switch } from '../';
 
 type NavbarProps = {
   darkMode?: boolean;
@@ -15,14 +13,13 @@ export default function Navbar({
 }: NavbarProps): ReactElement {
   return (
     <Main>
-      <Link href="/">
+      <Anchor href="/">
         <Title>ASCE FOOTBALL</Title>
-      </Link>
+      </Anchor>
       <RightSection>
         <Links>
-          <Link href="/">
-            <StyledLink>Home</StyledLink>
-          </Link>
+          <Anchor href="/leagues">Leagues</Anchor>
+          <Anchor href="/">Home</Anchor>
         </Links>
         <Switch
           name="theme-switch"
@@ -34,7 +31,7 @@ export default function Navbar({
   );
 }
 
-const Title = styled.a`
+const Title = styled.span`
   font-weight: 900;
   font-size: 1.2em;
   cursor: pointer;
@@ -43,45 +40,19 @@ const Title = styled.a`
 const Links = styled.div`
   font-weight: 700;
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  padding-right: 20px;
+  border-right: 2px solid ${({ theme }) => theme.secondary};
 `;
 
 const RightSection = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 20px;
 `;
-
-const StyledLink = styled.a`
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    background-color: ${({ theme }) => theme.secondary};
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-  }
-  &:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-`;
-
-// const HeaderLink = styled.a`
-//   text-decoration: none;
-//   cursor: pointer;
-// `;
 
 const Main = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1em;
+  padding: 1em;
 `;

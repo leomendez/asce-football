@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTable } from 'react-table';
 import styled from 'styled-components';
 import { getStandingsByLeagueIdAndSeason } from '../../api/standings';
@@ -14,7 +14,6 @@ type LeagueProps = {
 };
 
 const LeaguePage = ({ standings }: LeagueProps) => {
-  console.log({ standings });
   const router = useRouter();
 
   const handleRowClick = useCallback(
@@ -149,7 +148,7 @@ const LeaguePage = ({ standings }: LeagueProps) => {
                       return (
                         <TableCell
                           {...cell.getCellProps()}
-                          key={`${cell.value}-cell-key`}
+                          key={`${cell.column.id}-${cell.row.id}-my-unique-cell-key`}
                         >
                           {
                             // Render the cell contents
@@ -176,11 +175,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (id && typeof id === 'string') {
     const res = await getStandingsByLeagueIdAndSeason(id, '2021');
-    console.log({ res });
-
     if (res.length > 0) {
-      console.log({ res0: res[0] });
-
       standings = res[0];
     }
   }
