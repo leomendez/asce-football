@@ -14,6 +14,7 @@ export const DARK_THEME: DefaultTheme = {
   aux: powderBlue,
   fontColor: honeydew,
   font: 'Helvetica',
+  name: 'dark'
 };
 
 export const LIGHT_THEME: DefaultTheme = {
@@ -23,4 +24,5 @@ export const LIGHT_THEME: DefaultTheme = {
   aux: charcoal,
   fontColor: oxfordBlue,
   font: 'Helvetica',
+  name: 'light'
 };

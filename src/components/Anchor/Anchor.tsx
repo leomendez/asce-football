@@ -24,7 +24,7 @@ const StyledLink = styled.a`
     position: absolute;
     width: 100%;
     transform: scaleX(0);
-    height: 3px;
+    height: 4px;
     bottom: 0;
     left: 0;
     background-color: ${({ theme }) => theme.secondary};

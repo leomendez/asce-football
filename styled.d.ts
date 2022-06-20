@@ -8,5 +8,6 @@ declare module 'styled-components' {
     font: string;
     fontColor: string;
     aux: string;
+    name: string;
   };
 }
