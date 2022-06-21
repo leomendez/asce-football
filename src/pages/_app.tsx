@@ -43,6 +43,8 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.fontColor};
     font-size: 16px;
+    transition: background-color 1s;
+    transition: color 1s;
   }
   * {
     box-sizing: border-box;

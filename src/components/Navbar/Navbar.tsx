@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Anchor, Switch } from '../';
@@ -14,6 +15,7 @@ export default function Navbar({
   return (
     <Main>
       <Anchor href="/">
+        <Logo src="/icon.png" alt="icon" width="20px" height="20px" />
         <Title>ASCE FOOTBALL</Title>
       </Anchor>
       <RightSection>
@@ -35,6 +37,7 @@ const Title = styled.span`
   font-weight: 900;
   font-size: 1.2em;
   cursor: pointer;
+  padding-left: 0.5em;
 `;
 
 const Links = styled.div`
@@ -55,4 +58,8 @@ const Main = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1em;
+`;
+
+const Logo = styled(Image)`
+  ${({ theme }) => theme.name === 'dark' && 'filter: invert(100%)'};
 `;
