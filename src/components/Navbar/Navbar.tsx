@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import { ReactElement } from 'react';
-import styled from 'styled-components';
-import { Anchor, Switch } from '../';
+import Image from "next/image";
+import { ReactElement } from "react";
+import styled from "styled-components";
+import { Anchor, Switch } from "../";
 
 type NavbarProps = {
   darkMode?: boolean;
@@ -61,5 +61,5 @@ const Main = styled.div`
 `;
 
 const Logo = styled(Image)`
-  ${({ theme }) => theme.name === 'dark' && 'filter: invert(100%)'};
+  ${({ theme }) => theme.name === "dark" && "filter: invert(100%)"};
 `;

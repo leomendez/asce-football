@@ -1,38 +1,37 @@
-import type { NextPage } from 'next';
-import Image from 'next/image';
-import { useRef, useState } from 'react';
-import styled, { DefaultTheme } from 'styled-components';
-import { Anchor } from '../components';
+import type { NextPage } from "next";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import styled, { DefaultTheme } from "styled-components";
+import { Anchor } from "../components";
 
 type HomeProps = {
   theme: DefaultTheme;
 };
 
+const INITIAL_DIMENSIONS = {
+  width: "300px",
+  height: "100px",
+};
+
 const Home: NextPage<HomeProps> = ({ theme }) => {
-  const [{ width, height }, setLogoDimensions] = useState({
-    width: '300px',
-    height: '100px',
-  });
+  const [{ width, height }, setLogoDimensions] = useState(INITIAL_DIMENSIONS);
 
   const handleMouseEnter = () => {
     setLogoDimensions({
-      width: '400px',
-      height: '200px',
+      width: "350px",
+      height: "200px",
     });
   };
 
   const handleMouseLeave = () => {
-    setLogoDimensions({
-      width: '300px',
-      height: '100px',
-    });
+    setLogoDimensions(INITIAL_DIMENSIONS);
   };
 
   return (
     <Page>
       <Title>
         <Logo
-          src={theme?.name === 'dark' ? '/white-logo.svg' : '/logo.svg'}
+          src={theme?.name === "dark" ? "/white-logo.svg" : "/logo.svg"}
           alt="logo"
           width={width}
           height={height}
@@ -41,9 +40,12 @@ const Home: NextPage<HomeProps> = ({ theme }) => {
         />
         <h1>Welcome to Asce Football</h1>
       </Title>
-      <Anchor href="/leagues">
-        <PageLinks>Leagues</PageLinks>
-      </Anchor>
+      <Content>
+        Start by exploring the
+        <Anchor href="/leagues">
+          <PageLinks>Leagues</PageLinks>
+        </Anchor>
+      </Content>
     </Page>
   );
 };
@@ -62,12 +64,12 @@ const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  text-align: center;
 `;
 
 const PageLinks = styled.span`
   font-weight: 600;
-  font-size: 1.5em;
 `;
 
 const Logo = styled(Image)`
@@ -75,4 +77,11 @@ const Logo = styled(Image)`
   &:hover {
     filter: invert(100%);
   }
+`;
+
+const Content = styled.div`
+  font-size: 1.2em;
+  display: flex;
+  gap: 4px;
+  align-items: center;
 `;
