@@ -1,13 +1,13 @@
-import { GetServerSideProps } from "next";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useCallback, useMemo } from "react";
-import { useTable } from "react-table";
-import styled from "styled-components";
-import { getStandingsByLeagueIdAndSeason } from "../../api/standings";
-import { TeamLogo } from "../../components";
-import { StandingsResponse } from "../../types";
-import { standings as mockStandings } from "../../__mocks__/data/standings";
+import { GetServerSideProps } from 'next';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useCallback, useMemo } from 'react';
+import type { Column } from 'react-table';
+import styled from 'styled-components';
+import { getStandingsByLeagueIdAndSeason } from '../../api/standings';
+import { Table, TeamLogo } from '../../components';
+import { StandingsResponse } from '../../types';
+import { standings as mockStandings } from '../../__mocks__/data/standings';
 
 type LeagueProps = {
   standings: StandingsResponse;
@@ -33,7 +33,7 @@ const LeaguePage = ({ standings }: LeagueProps) => {
             <RankSeparator />
             <Logo>
               <Image
-                src={standing?.team?.logo || "/fake"}
+                src={standing?.team?.logo || '/fake'}
                 width="18px"
                 height="18px"
                 alt={`${standing?.team?.id}-logo`}
@@ -52,45 +52,39 @@ const LeaguePage = ({ standings }: LeagueProps) => {
     [handleRowClick, standings?.league?.standings]
   );
 
-  const columns = useMemo(
+  const columns: Column[] = useMemo(
     () => [
       {
         Header: <TeamHeader>R - Team</TeamHeader>,
-        accessor: "team",
+        accessor: 'team',
       },
       {
-        Header: "PL",
-        accessor: "PL",
+        Header: 'PL',
+        accessor: 'PL',
       },
       {
-        Header: "W",
-        accessor: "W",
+        Header: 'W',
+        accessor: 'W',
       },
       {
-        Header: "L",
-        accessor: "L",
+        Header: 'L',
+        accessor: 'L',
       },
       {
-        Header: "D",
-        accessor: "D",
+        Header: 'D',
+        accessor: 'D',
       },
       {
-        Header: "GD",
-        accessor: "GD",
+        Header: 'GD',
+        accessor: 'GD',
       },
       {
-        Header: "PTS",
-        accessor: "PTS",
+        Header: 'PTS',
+        accessor: 'PTS',
       },
     ],
     []
   );
-
-  // @ts-ignore
-  const tableInstance = useTable({ columns, data: data || [] });
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
 
   if (!standings) {
     return <div>Loading...</div>;
@@ -99,71 +93,10 @@ const LeaguePage = ({ standings }: LeagueProps) => {
   return (
     <LeagueContainer>
       <Title>
-        <TeamLogo src={standings.league?.logo || "/fake"} alt="league-logo" />
-        <h2>{standings.league?.name}</h2>{" "}
+        <TeamLogo src={standings.league?.logo || '/fake'} alt="league-logo" />
+        <h2>{standings.league?.name}</h2>
       </Title>
-      <Table {...getTableProps()}>
-        <thead>
-          {
-            // Loop over the header rows
-            headerGroups.map((headerGroup) => (
-              // Apply the header row props
-              <tr
-                {...headerGroup.getHeaderGroupProps()}
-                key={`${headerGroup.Header?.toString}-header-key`}
-              >
-                {
-                  // Loop over the headers in each row
-                  headerGroup.headers.map((column) => (
-                    // Apply the header cell props
-                    <TableHeader
-                      {...column.getHeaderProps()}
-                      key={`${column.id}-column-key`}
-                    >
-                      {
-                        // Render the header
-                        column.render("Header")
-                      }
-                    </TableHeader>
-                  ))
-                }
-              </tr>
-            ))
-          }
-        </thead>
-        {/* Apply the table body props */}
-        <tbody {...getTableBodyProps()}>
-          {
-            // Loop over the table rows
-            rows.map((row) => {
-              // Prepare the row for display
-              prepareRow(row);
-              return (
-                // Apply the row props
-                <TableRow {...row.getRowProps()} key={`${row.id}-row-key`}>
-                  {
-                    // Loop over the rows cells
-                    row.cells.map((cell) => {
-                      // Apply the cell props
-                      return (
-                        <TableCell
-                          {...cell.getCellProps()}
-                          key={`${cell.column.id}-${cell.row.id}-my-unique-cell-key`}
-                        >
-                          {
-                            // Render the cell contents
-                            cell.render("Cell")
-                          }
-                        </TableCell>
-                      );
-                    })
-                  }
-                </TableRow>
-              );
-            })
-          }
-        </tbody>
-      </Table>
+      <Table data={data} columns={columns}></Table>
     </LeagueContainer>
   );
 };
@@ -173,8 +106,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let standings = mockStandings;
 
-  if (id && typeof id === "string") {
-    const res = await getStandingsByLeagueIdAndSeason(id, "2021");
+  if (id && typeof id === 'string') {
+    const res = await getStandingsByLeagueIdAndSeason(id, '2021');
     if (res.length > 0) {
       standings = res[0];
     }
@@ -185,15 +118,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default LeaguePage;
-
-const TableHeader = styled.th`
-  padding: 0 0.4em;
-`;
-
-const TableCell = styled.td`
-  padding: 0.2em;
-  text-align: center;
-`;
 
 const LeagueContainer = styled.div`
   display: flex;
@@ -236,15 +160,4 @@ const RankSeparator = styled.span`
 
 const Logo = styled.span`
   margin: 0.3em 0.3em 0.1em 0;
-`;
-
-const TableRow = styled.tr`
-  cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => theme.primary};
-  }
-`;
-
-const Table = styled.table`
-  border-collapse: collapse;
 `;
