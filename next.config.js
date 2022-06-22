@@ -6,6 +6,10 @@ const nextConfig = {
   },
   images: {
     domains: ['media.api-sports.io']
+  },
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en'
   }
 }
 

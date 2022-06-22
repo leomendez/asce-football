@@ -10,7 +10,7 @@ type AnchorProps = {
 export default function Anchor({ children, href }: AnchorProps) {
   return (
     <Link href={href}>
-      <StyledLink>{children}</StyledLink>
+      <StyledLink href={href}>{children}</StyledLink>
     </Link>
   );
 }
@@ -19,6 +19,8 @@ const StyledLink = styled.a`
   cursor: pointer;
   display: inline-block;
   position: relative;
+  text-decoration: none;
+  color: ${({theme}) => theme.fontColor};
   &:after {
     content: '';
     position: absolute;

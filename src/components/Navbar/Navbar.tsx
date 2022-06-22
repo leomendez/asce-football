@@ -1,7 +1,8 @@
-import Image from "next/image";
-import { ReactElement } from "react";
-import styled from "styled-components";
-import { Anchor, Switch } from "../";
+import Image from 'next/image';
+import { ReactElement, useMemo } from 'react';
+import styled from 'styled-components';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { Anchor, Switch } from '../';
 
 type NavbarProps = {
   darkMode?: boolean;
@@ -12,6 +13,11 @@ export default function Navbar({
   darkMode,
   toggleDarkMode,
 }: NavbarProps): ReactElement {
+  const Icon = useMemo(
+    () => (darkMode ? <MdLightMode /> : <MdDarkMode />),
+    [darkMode]
+  );
+
   return (
     <Main>
       <Anchor href="/">
@@ -27,6 +33,7 @@ export default function Navbar({
           name="theme-switch"
           checked={darkMode || false}
           onChange={toggleDarkMode}
+          icon={Icon}
         />
       </RightSection>
     </Main>
@@ -61,5 +68,5 @@ const Main = styled.div`
 `;
 
 const Logo = styled(Image)`
-  ${({ theme }) => theme.name === "dark" && "filter: invert(100%)"};
+  ${({ theme }) => theme.name === 'dark' && 'filter: invert(100%)'};
 `;

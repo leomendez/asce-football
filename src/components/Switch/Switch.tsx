@@ -1,9 +1,10 @@
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type SwitchProps = {
   name: string;
   checked: boolean;
+  icon?: ReactNode;
   onChange?: () => void;
 };
 
@@ -11,12 +12,21 @@ export default function Switch({
   name,
   checked,
   onChange,
+  icon
 }: SwitchProps): ReactElement {
   return (
-    <Label htmlFor={name}>
-      <Input checked={checked} type="checkbox" onChange={onChange} id={name} />
-      <SwitchElement />
-    </Label>
+    <Container>
+      {!!icon && icon}
+      <Label htmlFor={name} aria-label={name}>
+        <Input
+          checked={checked}
+          type="checkbox"
+          onChange={onChange}
+          id={name}
+        />
+        <SwitchElement />
+      </Label>
+    </Container>
   );
 }
 
@@ -61,4 +71,9 @@ const Input = styled.input`
       transform: translate(16px, -50%);
     }
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  gap: 4px;
 `;

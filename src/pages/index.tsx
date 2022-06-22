@@ -1,50 +1,39 @@
-import type { NextPage } from "next";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import styled, { DefaultTheme } from "styled-components";
-import { Anchor } from "../components";
+import type { NextPage } from 'next';
+import Image from 'next/image';
+import styled, { DefaultTheme } from 'styled-components';
+import { Anchor } from '../components';
 
 type HomeProps = {
   theme: DefaultTheme;
 };
 
-const INITIAL_DIMENSIONS = {
-  width: "300px",
-  height: "100px",
-};
-
 const Home: NextPage<HomeProps> = ({ theme }) => {
-  const [{ width, height }, setLogoDimensions] = useState(INITIAL_DIMENSIONS);
-
-  const handleMouseEnter = () => {
-    setLogoDimensions({
-      width: "350px",
-      height: "200px",
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setLogoDimensions(INITIAL_DIMENSIONS);
-  };
-
   return (
     <Page>
       <Title>
         <Logo
-          src={theme?.name === "dark" ? "/white-logo.svg" : "/logo.svg"}
+          src={theme?.name === 'dark' ? '/white-logo.svg' : '/logo.svg'}
           alt="logo"
-          width={width}
-          height={height}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          width="300px"
+          height="100px"
         />
-        <h1>Welcome to Asce Football</h1>
+        <h1>Football</h1>
+        {/* <HeadingText>
+                    Browse through the stats for all football{' '}
+                    <Anchor href="/leagues">
+                        <PageLink>
+                            Leagues
+                        </PageLink>
+                    </Anchor>{' '}
+                    in the world
+                </HeadingText> */}
       </Title>
       <Content>
-        Start by exploring the
+        Browse through the stats for all football{' '}
         <Anchor href="/leagues">
-          <PageLinks>Leagues</PageLinks>
-        </Anchor>
+          <PageLink>Leagues</PageLink>
+        </Anchor>{' '}
+        in the world
       </Content>
     </Page>
   );
@@ -68,8 +57,9 @@ const Title = styled.div`
   text-align: center;
 `;
 
-const PageLinks = styled.span`
+const PageLink = styled.span`
   font-weight: 600;
+  color: ${({ theme }) => theme.secondary};
 `;
 
 const Logo = styled(Image)`
@@ -80,8 +70,6 @@ const Logo = styled(Image)`
 `;
 
 const Content = styled.div`
-  font-size: 1.2em;
-  display: flex;
-  gap: 4px;
-  align-items: center;
+  font-size: 3em;
+  text-align: center;
 `;
