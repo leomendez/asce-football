@@ -11,4 +11,4 @@ Next JS app that shows football stats using [api-football](https://www.api-footb
 - [x] Make Results Component  
 - [ ] Make Transfers Component  
 - [x] Add styling + transitions
-- [ ] Deploy to Vercel
+- [x] Deploy to Vercel
