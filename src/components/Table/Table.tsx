@@ -41,7 +41,7 @@ export default function Table<T extends object>({
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, pageSize: pagination ? 10 : 100 },
     },
     usePagination
   );
