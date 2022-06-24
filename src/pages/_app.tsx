@@ -1,13 +1,13 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { Navbar } from '../components/';
-import { useDarkMode } from '../hooks/useTheme';
-import { DARK_THEME, LIGHT_THEME } from '../utils/constants';
 import Router from 'next/router';
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { Navbar } from '../components/';
+import { useDarkMode } from '../hooks/useTheme';
+import { DARK_THEME, LIGHT_THEME } from '../utils/constants';
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start());

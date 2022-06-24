@@ -14,7 +14,7 @@ export default function Navbar({
   toggleDarkMode,
 }: NavbarProps): ReactElement {
   const Icon = useMemo(
-    () => (darkMode ? <MdLightMode /> : <MdDarkMode />),
+    () => (darkMode ? <MdDarkMode /> : <MdLightMode />),
     [darkMode]
   );
 
