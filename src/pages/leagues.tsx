@@ -42,10 +42,7 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
     setQuery(event.target.value);
   };
 
-  const debouncedChangeHandler = useMemo(
-    () => debounce(changeHandler, 200),
-    []
-  );
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 200), []);
 
   // Stop the invocation of the debounced function
   // after unmounting
@@ -101,7 +98,7 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
   );
 
   if (leagueQuery.isError) {
-    return <div>Oops, something went wrong</div>
+    return <div>Oops, something went wrong</div>;
   }
 
   return (
@@ -117,11 +114,7 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
           id="search-leagues"
         />
       </SearchBar>
-      {!filteredLeagues ? (
-        <Skeleton count={5} />
-      ) : (
-        <Table data={data} columns={columns} />
-      )}
+      {!filteredLeagues ? <Skeleton count={5} /> : <Table data={data} columns={columns} />}
     </Page>
   );
 };
@@ -157,6 +150,16 @@ const SearchInput = styled.input`
   font-size: 1.2em;
   padding: 0.4em;
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.fontColor};
+  border: 2px solid ${({ theme }) => theme.primary};
+  ::placeholder {
+    color: ${({ theme }) => theme.aux};
+  }
+  &:focus, &:hover {
+    border: 2px solid ${({ theme }) => theme.secondary};
+    outline: none;
+  }
 `;
 
 const SearchBar = styled.div`
