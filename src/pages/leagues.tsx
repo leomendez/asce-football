@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import type { Column } from 'react-table';
 import styled from 'styled-components';
 import { getLeagues } from '../api/leagues';
-import { Anchor, Table } from '../components';
+import { Anchor, Input, Table } from '../components';
 import type { LeagueResponse } from '../types';
 import { leagues as mockLeagues } from '../__mocks__/data/leagues';
 
@@ -19,13 +19,13 @@ type Props = {
 const Leagues: NextPage<Props> = ({ leagues }) => {
   const [query, setQuery] = useState('');
 
-  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => mockLeagues, {
-    initialData: leagues,
-  });
-
-  // const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', getLeagues, {
+  // const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => mockLeagues, {
   //   initialData: leagues,
   // });
+
+  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', getLeagues, {
+    initialData: leagues,
+  });
 
   let filteredLeagues = leagueQuery?.data || mockLeagues;
 
@@ -114,7 +114,7 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
           id="search-leagues"
         />
       </SearchBar>
-      {!filteredLeagues ? <Skeleton count={5} /> : <Table data={data} columns={columns} />}
+      {!filteredLeagues ? <Skeleton count={5} /> : <Table data={data} columns={columns} pagination />}
     </Page>
   );
 };
@@ -146,20 +146,8 @@ const LeagueItem = styled.li`
   width: 230px;
 `;
 
-const SearchInput = styled.input`
+const SearchInput = styled(Input)`
   font-size: 1.2em;
-  padding: 0.4em;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.fontColor};
-  border: 2px solid ${({ theme }) => theme.primary};
-  ::placeholder {
-    color: ${({ theme }) => theme.aux};
-  }
-  &:focus, &:hover {
-    border: 2px solid ${({ theme }) => theme.secondary};
-    outline: none;
-  }
 `;
 
 const SearchBar = styled.div`

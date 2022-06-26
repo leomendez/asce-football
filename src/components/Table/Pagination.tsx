@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button, Input, Select } from '..';
 
 type Props = {
   gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
@@ -26,54 +27,51 @@ export default function Pagination({
   canPreviousPage,
   pageSize,
 }: Props) {
+
   return (
     <PaginationContainer className="pagination">
       <NavButtons>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        </Button>
+        <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        </Button>
+        <Select
+          value={pageIndex + 1}
+          onChange={(e) => {
+            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+            gotoPage(page);
+            // setPageSize(Number(e.target.value));
+          }}
+        >
+          {pageOptions.map((page) => (
+            <option key={page + 1} value={page + 1}>
+              {page + 1}
+            </option>
+          ))}
+        </Select>
+        <Button onClick={() => nextPage()} disabled={!canNextPage}>
           {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        </Button>
+        <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {'>>'}
-        </button>{' '}
+        </Button>
       </NavButtons>
       <PageInfo>
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
+        <Select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </Select>
       </PageInfo>
-      <select
-        value={pageSize}
-        onChange={(e) => {
-          setPageSize(Number(e.target.value));
-        }}
-      >
-        {[10, 20, 30, 40, 50].map((pageSize) => (
-          <option key={pageSize} value={pageSize}>
-            Show {pageSize}
-          </option>
-        ))}
-      </select>
     </PaginationContainer>
   );
 }
@@ -85,5 +83,8 @@ const PaginationContainer = styled.div`
   align-items: center;
 `;
 
-const NavButtons = styled.div``;
+const NavButtons = styled.div`
+  padding: 0.4em;
+`;
+
 const PageInfo = styled.div``;
