@@ -144,6 +144,9 @@ const LeagueItem = styled.li`
   align-items: center;
   justify-content: center;
   width: 230px;
+  @media screen and (max-width: 670px) {
+    width: auto;
+  }
 `;
 
 const SearchInput = styled(Input)`

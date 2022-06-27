@@ -4,18 +4,6 @@ import styled from 'styled-components';
 export default function Select({ children, ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <StyledSelect {...props}>{children}</StyledSelect>
-    // <select
-    //       value={pageSize}
-    //       onChange={(e) => {
-    //         setPageSize(Number(e.target.value));
-    //       }}
-    //     >
-    //       {[2, 10, 20, 30, 40, 50].map((pageSize) => (
-    //         <option key={pageSize} value={pageSize}>
-    //           Show {pageSize}
-    //         </option>
-    //       ))}
-    //     </select>
   );
 }
 
