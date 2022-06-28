@@ -12,7 +12,7 @@ Next JS app that shows football stats using [api-football](https://www.api-footb
 - [x] Add styling + transitions
 - [x] Deploy to Vercel
 - [x] Update input styling
-- [ ] Update Pagination styling
+- [x] Update Pagination styling
 - [ ] Add error component
-- [ ] Implement loading skeleton
+- [x] Implement loading skeleton
 - [ ] Make Transfers Component  

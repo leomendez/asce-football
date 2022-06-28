@@ -1,9 +1,7 @@
 import debounce from 'lodash.debounce';
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import { useQuery } from 'react-query';
 import type { Column } from 'react-table';
 import styled from 'styled-components';
@@ -18,10 +16,6 @@ type Props = {
 
 const Leagues: NextPage<Props> = ({ leagues }) => {
   const [query, setQuery] = useState('');
-
-  // const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => mockLeagues, {
-  //   initialData: leagues,
-  // });
 
   const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', getLeagues, {
     initialData: leagues,
@@ -58,12 +52,7 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
         league: (
           <Anchor href={`/league/${item.league.id}`}>
             <LeagueItem key={item.league.id}>
-              <Image
-                src={item.league.logo}
-                alt={`league-logo-${item.league.id}`}
-                width={20}
-                height={20}
-              />
+              <Image src={item.league.logo} alt={`league-logo-${item.league.id}`} width={20} height={20} />
               {item.league.name}
             </LeagueItem>
           </Anchor>
@@ -104,7 +93,6 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
   return (
     <Page>
       <h1>Leagues</h1>
-      <Skeleton />
       <SearchBar>
         <label htmlFor="search-leagues" aria-label="search-leagues" />
         <SearchInput
@@ -114,17 +102,9 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
           id="search-leagues"
         />
       </SearchBar>
-      {!filteredLeagues ? <Skeleton count={5} /> : <Table data={data} columns={columns} pagination />}
+      <Table data={data} columns={columns} pagination loading={leagueQuery.isLoading} />
     </Page>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const leagues: LeagueResponse[] = mockLeagues;
-
-  return {
-    props: { leagues }, // will be passed to the page component as props
-  };
 };
 
 export default Leagues;
@@ -134,6 +114,7 @@ const Page = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3em;
 `;
 
 const LeagueItem = styled.li`

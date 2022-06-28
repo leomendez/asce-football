@@ -1,19 +1,17 @@
 import type { Column } from 'react-table';
 import { useTable, usePagination } from 'react-table';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 import Pagination from './Pagination';
 
 type TableProps<T extends object> = {
   columns: Column<T>[];
   data: readonly T[];
   pagination?: boolean;
+  loading?: boolean;
 };
 
-export default function Table<T extends object>({
-  data,
-  columns,
-  pagination = false,
-}: TableProps<T>) {
+export default function Table<T extends object>({ data, columns, pagination = false, loading }: TableProps<T>) {
   //   const tableInstance = useTable({ columns, data: data || [] });
 
   //   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -56,10 +54,7 @@ export default function Table<T extends object>({
               (
                 headerGroup // Apply the header row props
               ) => (
-                <tr
-                  {...headerGroup.getHeaderGroupProps()}
-                  key={`${headerGroup.Header?.toString}-header-key`}
-                >
+                <tr {...headerGroup.getHeaderGroupProps()} key={`${headerGroup.Header?.toString}-header-key`}>
                   {
                     // Loop over the headers in each row
                     headerGroup.headers.map(
@@ -95,14 +90,13 @@ export default function Table<T extends object>({
                     row.cells.map((cell) => {
                       // Apply the cell props
                       return (
-                        <TableCell
-                          {...cell.getCellProps()}
-                          key={`${cell.column.id}-${cell.row.id}-my-unique-cell-key`}
-                        >
-                          {
+                        <TableCell {...cell.getCellProps()} key={`${cell.column.id}-${cell.row.id}-my-unique-cell-key`}>
+                          {loading ? (
+                            <Skeleton />
+                          ) : (
                             // Render the cell contents
                             cell.render('Cell')
-                          }
+                          )}
                         </TableCell>
                       );
                     })

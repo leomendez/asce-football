@@ -9,14 +9,8 @@ type NavbarProps = {
   toggleDarkMode?: () => void;
 };
 
-export default function Navbar({
-  darkMode,
-  toggleDarkMode,
-}: NavbarProps): ReactElement {
-  const Icon = useMemo(
-    () => (darkMode ? <MdDarkMode /> : <MdLightMode />),
-    [darkMode]
-  );
+export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps): ReactElement {
+  const Icon = useMemo(() => (darkMode ? <MdDarkMode /> : <MdLightMode />), [darkMode]);
 
   return (
     <Main>
@@ -29,12 +23,7 @@ export default function Navbar({
           <Anchor href="/leagues">Leagues</Anchor>
           <Anchor href="/">Home</Anchor>
         </Links>
-        <Switch
-          name="theme-switch"
-          checked={darkMode || false}
-          onChange={toggleDarkMode}
-          icon={Icon}
-        />
+        <Switch name="theme-switch" checked={darkMode || false} onChange={toggleDarkMode} icon={Icon} />
       </RightSection>
     </Main>
   );
@@ -65,6 +54,10 @@ const Main = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1em;
+  position: sticky;
+  top: 0;
+  background-color: ${({ theme }) => theme.background};
+  z-index: 1; // added to keep on top of content when scrolling
 `;
 
 const Logo = styled(Image)`

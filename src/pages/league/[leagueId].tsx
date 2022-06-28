@@ -87,7 +87,11 @@ const LeaguePage = ({ standings }: LeagueProps) => {
   );
 
   if (!standings) {
-    return <div>Loading...</div>;
+    return (
+      <LeagueContainer>
+        <h1>Oops, something went wrong</h1>
+      </LeagueContainer>
+    );
   }
 
   return (
@@ -104,7 +108,7 @@ const LeaguePage = ({ standings }: LeagueProps) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.leagueId;
 
-  let standings = mockStandings;
+  let standings = null;
 
   if (id && typeof id === 'string') {
     const res = await getStandingsByLeagueIdAndSeason(id, '2021');
