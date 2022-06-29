@@ -1,6 +1,7 @@
-import React from 'react';
+import { BiFirstPage, BiLastPage } from 'react-icons/bi';
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import styled from 'styled-components';
-import { Button, Input, Select } from '..';
+import { Button, Select } from '..';
 
 type Props = {
   gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
@@ -31,12 +32,12 @@ export default function Pagination({
   return (
     <PaginationContainer className="pagination">
       <NavButtons>
-        <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </Button>
-        <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </Button>
+        <NavButton onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          <BiFirstPage />
+        </NavButton>
+        <NavButton onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <MdNavigateBefore />
+        </NavButton>
         <Select
           value={pageIndex + 1}
           onChange={(e) => {
@@ -51,12 +52,12 @@ export default function Pagination({
             </option>
           ))}
         </Select>
-        <Button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </Button>
-        <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </Button>
+        <NavButton onClick={() => nextPage()} disabled={!canNextPage}>
+          <MdNavigateNext />
+        </NavButton>
+        <NavButton onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          <BiLastPage />
+        </NavButton>
       </NavButtons>
       <PageInfo>
         <Select
@@ -85,6 +86,13 @@ const PaginationContainer = styled.div`
 
 const NavButtons = styled.div`
   padding: 0.4em;
+  display: flex;
+  gap: 2px;
 `;
+
+const NavButton = styled(Button)`
+  font-size: 1.2em;
+  padding: 0 0.3em;
+`
 
 const PageInfo = styled.div``;

@@ -51,12 +51,12 @@ const GlobalStyle = createGlobalStyle`
     transition: color 1s;
     /* width */
     ::-webkit-scrollbar {
-      width: 10px;
+      width: 5px;
     }
     /* Track */
     ::-webkit-scrollbar-track {
       background: ${({ theme }) => theme.primary};
-      border-radius: 10px;
+      border-radius: 5px;
     }
 
     /* Handle */

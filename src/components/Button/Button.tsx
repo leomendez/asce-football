@@ -12,6 +12,12 @@ const StyledButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em 1.5em;
   &:hover,
   &:focus {
     border: 2px solid ${({ theme }) => theme.secondary};

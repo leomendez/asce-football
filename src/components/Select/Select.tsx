@@ -12,6 +12,7 @@ const StyledSelect = styled.select`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.fontColor};
+  cursor: pointer;
   border: 2px solid ${({ theme }) => theme.primary};
   ::placeholder {
     color: ${({ theme }) => theme.aux};
@@ -20,5 +21,25 @@ const StyledSelect = styled.select`
   &:hover {
     border: 2px solid ${({ theme }) => theme.secondary};
     outline: none;
+  }
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.primary};
+    border-radius: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.aux + '80'};
+    border-radius: 10px;
+  } 
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.aux};
   }
 `;
