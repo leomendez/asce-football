@@ -1,7 +1,8 @@
 import { BiFirstPage, BiLastPage } from 'react-icons/bi';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import styled from 'styled-components';
-import { Button, Select } from '..';
+import { Select } from '..';
+import Button from '../Button/Button'
 
 type Props = {
   gotoPage: (updater: number | ((pageIndex: number) => number)) => void;

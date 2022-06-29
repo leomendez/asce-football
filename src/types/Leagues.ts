@@ -27,5 +27,5 @@ export type Season = {
 export type LeagueResponse = {
   league: League;
   country: Country;
-  season: Season;
+  seasons: Season[];
 };

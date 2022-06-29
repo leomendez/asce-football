@@ -7,7 +7,7 @@ import type { Column } from 'react-table';
 import styled from 'styled-components';
 import { getLeagues } from '../api/leagues';
 import { Anchor, Input, Table } from '../components';
-import type { LeagueResponse } from '../types';
+import type { LeagueResponse, Season } from '../types';
 import { leagues as mockLeagues } from '../__mocks__/data/leagues';
 
 type Props = {
@@ -46,11 +46,15 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
     };
   }, [debouncedChangeHandler]);
 
+  const getCurrentSeason = (seasons: Season[]) => {
+    return seasons?.find(season => season.current)?.year;
+  }
+
   const data = useMemo(
     () =>
       filteredLeagues?.map((item) => ({
         league: (
-          <Anchor href={`/league/${item.league.id}`}>
+          <Anchor href={`/league/${item.league.id}/${getCurrentSeason(item.seasons)}`}>
             <LeagueItem key={item.league.id}>
               <Image src={item.league.logo} alt={`league-logo-${item.league.id}`} width={20} height={20} />
               {item.league.name}
@@ -136,7 +140,7 @@ const SearchInput = styled(Input)`
 
 const SearchBar = styled.div`
   display: flex;
-  margin: 1em;
+  margin: 0.5em;
   width: 100%;
   justify-content: center;
   align-items: center;

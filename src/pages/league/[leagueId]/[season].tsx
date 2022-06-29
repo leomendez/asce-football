@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import type { Column } from 'react-table';
 import styled from 'styled-components';
-import { getStandingsByLeagueIdAndSeason } from '../../api/standings';
-import { Table, TeamLogo } from '../../components';
-import { StandingsResponse } from '../../types';
-import { standings as mockStandings } from '../../__mocks__/data/standings';
+import { getStandingsByLeagueIdAndSeason } from '../../../api/standings';
+import { Table, TeamLogo } from '../../../components';
+import { Standing, StandingsResponse } from '../../../types';
+import { standings as mockStandings } from '../../../__mocks__/data/standings';
 
 type LeagueProps = {
   standings: StandingsResponse;
@@ -24,32 +24,44 @@ const LeaguePage = ({ standings }: LeagueProps) => {
     [router]
   );
 
-  const data = useMemo(
-    () =>
-      standings?.league?.standings[0]?.map((standing) => ({
-        team: (
-          <Team onClick={() => handleRowClick(standing.team.id)}>
-            <b>{standing.rank}</b>
-            <RankSeparator />
-            <Logo>
-              <Image
-                src={standing?.team?.logo || '/fake'}
-                width="18px"
-                height="18px"
-                alt={`${standing?.team?.id}-logo`}
-              />
-            </Logo>
-            {standing?.team?.name}
-          </Team>
-        ),
-        PL: standing?.all?.played,
-        W: standing?.all?.win,
-        D: standing?.all?.draw,
-        L: standing?.all?.lose,
-        GD: standing?.goalsDiff,
-        PTS: standing?.points,
-      })),
-    [handleRowClick, standings?.league?.standings]
+  const getStandingsData = useCallback(
+    (standings: Standing[][]) => {
+      // TODO - figure out type
+      const data: any[] = [];
+      standings?.forEach((standingList) => {
+        const stan = standingList.map((standing) => ({
+          team: (
+            <Team onClick={() => handleRowClick(standing.team.id)}>
+              <b>{standing.rank}</b>
+              <RankSeparator />
+              <Logo>
+                <Image
+                  src={standing?.team?.logo || '/fake'}
+                  width="18px"
+                  height="18px"
+                  alt={`${standing?.team?.id}-logo`}
+                />
+              </Logo>
+              {standing?.team?.name}
+            </Team>
+          ),
+          PL: standing?.all?.played,
+          W: standing?.all?.win,
+          D: standing?.all?.draw,
+          L: standing?.all?.lose,
+          GD: standing?.goalsDiff,
+          PTS: standing?.points,
+        }));
+        data.push(stan);
+      });
+      return data;
+    },
+    [handleRowClick]
+  );
+
+  const dataList = useMemo(
+    () => getStandingsData(standings?.league?.standings),
+    [standings?.league?.standings, getStandingsData]
   );
 
   const columns: Column[] = useMemo(
@@ -100,18 +112,25 @@ const LeaguePage = ({ standings }: LeagueProps) => {
         <TeamLogo src={standings.league?.logo || '/fake'} alt="league-logo" />
         <h2>{standings.league?.name}</h2>
       </Title>
-      <Table data={data} columns={columns}></Table>
+      {/* <Table data={data} columns={columns}></Table> */}
+      {dataList.map((data, index) => (
+        <Group key={index}>
+          <Table data={data} columns={columns}></Table>
+        </Group>
+      ))}
     </LeagueContainer>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context?.params?.leagueId;
+  const leagueId = context?.params?.leagueId;
+  const season = context?.params?.season;
 
   let standings = null;
 
-  if (id && typeof id === 'string') {
-    const res = await getStandingsByLeagueIdAndSeason(id, '2021');
+  if (leagueId && typeof leagueId === 'string' && season && typeof season === 'string') {
+    const res = await getStandingsByLeagueIdAndSeason(leagueId, season);
+
     if (res.length > 0) {
       standings = res[0];
     }
@@ -165,4 +184,8 @@ const RankSeparator = styled.span`
 
 const Logo = styled.span`
   margin: 0.3em 0.3em 0.1em 0;
+`;
+
+const Group = styled.div`
+  margin: 1em;
 `;

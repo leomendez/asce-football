@@ -92,7 +92,7 @@ export default function Table<T extends object>({ data, columns, pagination = fa
                       return (
                         <TableCell {...cell.getCellProps()} key={`${cell.column.id}-${cell.row.id}-my-unique-cell-key`}>
                           {loading ? (
-                            <Skeleton />
+                            <Skeleton width="200px" />
                           ) : (
                             // Render the cell contents
                             cell.render('Cell')
@@ -143,4 +143,5 @@ const TableRow = styled.tr`
 
 const StyledTable = styled.table`
   border-collapse: collapse;
+  margin-bottom: 1em;
 `;
