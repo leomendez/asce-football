@@ -17,7 +17,7 @@ type Props = {
 const Leagues: NextPage<Props> = ({ leagues }) => {
   const [query, setQuery] = useState('');
 
-  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', getLeagues, {
+  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => getLeagues(), {
     initialData: leagues,
   });
 

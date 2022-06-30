@@ -4,17 +4,29 @@ import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import type { Column } from 'react-table';
 import styled from 'styled-components';
+import { getLeagues } from '../../../api/leagues';
 import { getStandingsByLeagueIdAndSeason } from '../../../api/standings';
-import { Table, TeamLogo } from '../../../components';
-import { Standing, StandingsResponse } from '../../../types';
-import { standings as mockStandings } from '../../../__mocks__/data/standings';
+import { Select, Table, TeamLogo } from '../../../components';
+import { LeagueResponse, Standing, StandingsResponse } from '../../../types';
 
 type LeagueProps = {
   standings: StandingsResponse;
+  league: LeagueResponse;
 };
 
-const LeaguePage = ({ standings }: LeagueProps) => {
+type TableData = {
+  team: JSX.Element;
+  PL: number;
+  W: number;
+  D: number;
+  L: number;
+  GD: number;
+  PTS: number;
+};
+
+const LeaguePage = ({ standings, league }: LeagueProps) => {
   const router = useRouter();
+  const { season } = router.query;
 
   const handleRowClick = useCallback(
     (teamId: number) =>
@@ -26,8 +38,7 @@ const LeaguePage = ({ standings }: LeagueProps) => {
 
   const getStandingsData = useCallback(
     (standings: Standing[][]) => {
-      // TODO - figure out type
-      const data: any[] = [];
+      const data: TableData[][] = [];
       standings?.forEach((standingList) => {
         const stan = standingList.map((standing) => ({
           team: (
@@ -98,26 +109,34 @@ const LeaguePage = ({ standings }: LeagueProps) => {
     []
   );
 
-  if (!standings) {
-    return (
-      <LeagueContainer>
-        <h1>Oops, something went wrong</h1>
-      </LeagueContainer>
-    );
-  }
-
   return (
     <LeagueContainer>
       <Title>
-        <TeamLogo src={standings.league?.logo || '/fake'} alt="league-logo" />
-        <h2>{standings.league?.name}</h2>
+        <TeamLogo src={league?.league?.logo || '/fake'} alt="league-logo" />
+        <h2>{league?.league?.name}</h2>
       </Title>
-      {/* <Table data={data} columns={columns}></Table> */}
-      {dataList.map((data, index) => (
-        <Group key={index}>
-          <Table data={data} columns={columns}></Table>
-        </Group>
-      ))}
+      <SeasonSelect>
+        <span>Season</span>
+        <Select
+          onChange={(e) => {
+            router.push(`/league/${league?.league?.id}/${e.target.value}`);
+          }}
+          value={season}
+        >
+          {league.seasons?.map((season) => {
+            return <option key={season.year}>{season.year}</option>;
+          })}
+        </Select>
+      </SeasonSelect>
+      {!standings ? (
+        <div>No data for this season</div>
+      ) : (
+        dataList.map((data, index) => (
+          <Group key={index}>
+            <Table data={data} columns={columns}></Table>
+          </Group>
+        ))
+      )}
     </LeagueContainer>
   );
 };
@@ -127,16 +146,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const season = context?.params?.season;
 
   let standings = null;
+  let league = null;
 
   if (leagueId && typeof leagueId === 'string' && season && typeof season === 'string') {
-    const res = await getStandingsByLeagueIdAndSeason(leagueId, season);
+    const leagueResponse = await getLeagues(leagueId);
+    league = leagueResponse[0];
 
-    if (res.length > 0) {
-      standings = res[0];
+    const standingResponse = await getStandingsByLeagueIdAndSeason(leagueId, season);
+
+    if (standingResponse.length > 0) {
+      standings = standingResponse[0];
     }
   }
   return {
-    props: { standings }, // will be passed to the page component as props
+    props: { standings, league }, // will be passed to the page component as props
   };
 };
 
@@ -188,4 +211,24 @@ const Logo = styled.span`
 
 const Group = styled.div`
   margin: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid ${({ theme }) => theme.primary};
+`;
+
+const SeasonSelect = styled.div`
+  display: flex;
+  gap: 10px;
+  font-size: 1.4em;
+  font-weight: 700;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  padding: 1em;
+  margin: 1em;
+  border-bottom: 1px solid ${({ theme }) => theme.primary};
+  select {
+    font-size: 0.8em;
+  }
 `;

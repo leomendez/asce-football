@@ -1,4 +1,3 @@
-import { URLSearchParams } from 'url';
 import { StandingsResponse } from '../types';
 import { getOptions } from '../utils/apiFootballUtils';
 
