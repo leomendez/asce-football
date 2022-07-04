@@ -12,10 +12,6 @@ type TableProps<T extends object> = {
 };
 
 export default function Table<T extends object>({ data, columns, pagination = false, loading }: TableProps<T>) {
-  //   const tableInstance = useTable({ columns, data: data || [] });
-
-  //   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-  //     tableInstance;
 
   const {
     getTableProps,
@@ -126,12 +122,14 @@ export default function Table<T extends object>({ data, columns, pagination = fa
 }
 
 const TableHeader = styled.th`
-  padding: 0 0.4em;
+  padding: 0.5em 0.4em;
+  background-color: ${({ theme }) => theme.secondary + '90'};
 `;
 
 const TableCell = styled.td`
   padding: 0.2em;
   text-align: center;
+  border-bottom: 2px solid ${({ theme }) => theme.secondary};
 `;
 
 const TableRow = styled.tr`

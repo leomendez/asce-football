@@ -111,10 +111,6 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
 
   return (
     <LeagueContainer>
-      <Title>
-        <TeamLogo src={league?.league?.logo || '/fake'} alt="league-logo" />
-        <h2>{league?.league?.name}</h2>
-      </Title>
       <SeasonSelect>
         <span>Season</span>
         <Select
@@ -128,6 +124,13 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
           })}
         </Select>
       </SeasonSelect>
+      <Heading>
+        <Title>STANDINGS</Title>
+        <LeagueName>
+          <Image src={league?.league?.logo || '/fake'} alt="league-logo" height="30px" width="30px" />
+          <span>{league?.league?.name}</span>
+        </LeagueName>
+      </Heading>
       {!standings ? (
         <div>No data for this season</div>
       ) : (
@@ -173,13 +176,28 @@ const LeagueContainer = styled.div`
   padding-bottom: 2em;
 `;
 
-const Title = styled.div`
+const Heading = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 60px;
   justify-content: center;
   align-items: center;
-  margin: 2em;
+  border-bottom: 1px solid ${({ theme }) => theme.primary};
+  width: 100%;
 `;
+
+const Title = styled.div`
+  font-size: 2em;
+  font-weight: 800;
+`;
+
+const LeagueName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 600;
+  gap: 5px;
+`
 
 const Team = styled.div`
   display: flex;
@@ -219,15 +237,12 @@ const Group = styled.div`
 
 const SeasonSelect = styled.div`
   display: flex;
-  gap: 10px;
-  font-size: 1.4em;
-  font-weight: 700;
+  font-size: 1.2em;
   align-items: center;
-  width: 100%;
   justify-content: center;
-  padding: 1em;
-  margin: 1em;
-  border-bottom: 1px solid ${({ theme }) => theme.primary};
+  gap: 20px;
+  font-weight: 600;
+  margin-bottom: 2em;
   select {
     font-size: 0.8em;
   }

@@ -53,7 +53,7 @@ const Main = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  padding: 2em;
   position: sticky;
   top: 0;
   background-color: ${({ theme }) => theme.background};

@@ -47,6 +47,7 @@ const Page = styled.main`
   justify-content: space-evenly;
   flex-direction: column;
   height: 90vh;
+  padding: 2em;
 `;
 
 const Title = styled.div`
