@@ -79,11 +79,11 @@ const Leagues: NextPage<Props> = ({ leagues }) => {
   const columns: Column[] = useMemo(
     () => [
       {
-        Header: <h2>League</h2>,
+        Header: <LeagueHeader>League</LeagueHeader>,
         accessor: 'league',
       },
       {
-        Header: <h2>Country</h2>,
+        Header: <LeagueHeader>Country</LeagueHeader>,
         accessor: 'country',
       },
     ],
@@ -121,17 +121,21 @@ const Page = styled.main`
   margin-bottom: 3em;
 `;
 
+const LeagueHeader = styled.span`
+  font-weight: 800;
+  font-size: 1.5em;
+  display: flex;
+  padding-left: 1em;
+`;
+
 const LeagueItem = styled.li`
   display: flex;
   gap: 10px;
   padding: 0.3em 1em;
   font-size: 1.2em;
   align-items: center;
-  justify-content: center;
-  width: 230px;
-  @media screen and (max-width: 670px) {
-    width: auto;
-  }
+  justify-content: flex-start;
+  width: 100%;
 `;
 
 const SearchInput = styled(Input)`

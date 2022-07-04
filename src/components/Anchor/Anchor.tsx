@@ -20,6 +20,7 @@ const StyledLink = styled.a`
   display: inline-block;
   position: relative;
   text-decoration: none;
+  width: 100%;
   color: ${({theme}) => theme.fontColor};
   &:after {
     content: '';

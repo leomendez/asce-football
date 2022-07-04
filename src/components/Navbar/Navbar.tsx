@@ -14,10 +14,12 @@ export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps): React
 
   return (
     <Main>
-      <Anchor href="/">
-        <Logo src="/icon.png" alt="icon" width="20px" height="20px" />
-        <Title>ASCE FOOTBALL</Title>
-      </Anchor>
+      <div>
+        <Anchor href="/">
+          <Logo src="/icon.png" alt="icon" width="20px" height="20px" />
+          <Title>ASCE FOOTBALL</Title>
+        </Anchor>
+      </div>
       <RightSection>
         <Links>
           <Anchor href="/leagues">Leagues</Anchor>

@@ -3,6 +3,7 @@ import { useTable, usePagination } from 'react-table';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import Pagination from './Pagination';
+import { honeydew } from '../../utils/colors';
 
 type TableProps<T extends object> = {
   columns: Column<T>[];
@@ -124,11 +125,11 @@ export default function Table<T extends object>({ data, columns, pagination = fa
 const TableHeader = styled.th`
   padding: 0.5em 0.4em;
   background-color: ${({ theme }) => theme.secondary + '90'};
+  color: ${honeydew};
 `;
 
 const TableCell = styled.td`
   padding: 0.2em;
-  text-align: center;
   border-bottom: 2px solid ${({ theme }) => theme.secondary};
 `;
 

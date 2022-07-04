@@ -16,12 +16,12 @@ type LeagueProps = {
 
 type TableData = {
   team: JSX.Element;
-  PL: number;
-  W: number;
-  D: number;
-  L: number;
-  GD: number;
-  PTS: number;
+  PL: JSX.Element;
+  W: JSX.Element;
+  D: JSX.Element;
+  L: JSX.Element;
+  GD: JSX.Element;
+  PTS: JSX.Element;
 };
 
 const LeaguePage = ({ standings, league }: LeagueProps) => {
@@ -43,25 +43,27 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
         const stan = standingList.map((standing) => ({
           team: (
             <Team onClick={() => handleRowClick(standing.team.id)}>
-              <b>{standing.rank}</b>
-              <RankSeparator />
-              <Logo>
-                <Image
-                  src={standing?.team?.logo || '/fake'}
-                  width="18px"
-                  height="18px"
-                  alt={`${standing?.team?.id}-logo`}
-                />
-              </Logo>
-              {standing?.team?.name}
+              <Rank>{standing.rank}</Rank>
+              {/* <RankSeparator /> */}
+              <div>
+                <Logo>
+                  <Image
+                    src={standing?.team?.logo || '/fake'}
+                    width="18px"
+                    height="18px"
+                    alt={`${standing?.team?.id}-logo`}
+                  />
+                </Logo>
+                {standing?.team?.name}
+              </div>
             </Team>
           ),
-          PL: standing?.all?.played,
-          W: standing?.all?.win,
-          D: standing?.all?.draw,
-          L: standing?.all?.lose,
-          GD: standing?.goalsDiff,
-          PTS: standing?.points,
+          PL: <CellItem>{standing?.all?.played}</CellItem>,
+          W: <CellItem>{standing?.all?.win}</CellItem>,
+          D: <CellItem>{standing?.all?.draw}</CellItem>,
+          L: <CellItem>{standing?.all?.lose}</CellItem>,
+          GD: <CellItem>{standing?.goalsDiff}</CellItem>,
+          PTS: <CellItem>{standing?.points}</CellItem>,
         }));
         data.push(stan);
       });
@@ -78,7 +80,7 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
   const columns: Column[] = useMemo(
     () => [
       {
-        Header: <TeamHeader>R - Team</TeamHeader>,
+        Header: '',
         accessor: 'team',
       },
       {
@@ -174,6 +176,7 @@ const LeagueContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 2em;
+  padding: 2em 1em;
 `;
 
 const Heading = styled.div`
@@ -197,34 +200,21 @@ const LeagueName = styled.div`
   font-size: 1.5em;
   font-weight: 600;
   gap: 5px;
-`
+`;
 
 const Team = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 0.2em;
-  min-width: 210px;
+  gap: 20px;
   &:hover {
     font-weight: 700;
   }
 `;
 
-const TeamHeader = styled.div`
-  display: flex;
-  justify-content: flex-start;
-`;
-
-const RankSeparator = styled.span`
-  border: 2px solid white;
-  border-radius: 50%;
-  height: 7px;
-  width: 7px;
-  margin: 0.5em;
-`;
-
 const Logo = styled.span`
-  margin: 0.3em 0.3em 0.1em 0;
+  margin: 0.3em 0.7em 0.1em 0;
 `;
 
 const Group = styled.div`
@@ -247,3 +237,15 @@ const SeasonSelect = styled.div`
     font-size: 0.8em;
   }
 `;
+
+const CellItem = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 2em;
+`;
+
+const Rank = styled.b`
+  text-align: center;
+  width: 1em;
+`
