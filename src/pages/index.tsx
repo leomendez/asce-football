@@ -30,9 +30,11 @@ const Home: NextPage<HomeProps> = ({ theme }) => {
       </Title>
       <Content>
         Browse through the stats for all football{' '}
-        <Anchor href="/leagues">
+        <LeaguesText>
+        <Anchor href="/leagues" fullWidth={false}>
           <PageLink>Leagues</PageLink>
         </Anchor>{' '}
+        </LeaguesText>
         in the world
       </Content>
     </Page>
@@ -74,3 +76,7 @@ const Content = styled.div`
   font-size: 3em;
   text-align: center;
 `;
+
+const LeaguesText = styled.span`
+  width: 200px;
+`

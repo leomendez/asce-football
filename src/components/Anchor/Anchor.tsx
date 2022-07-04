@@ -4,23 +4,28 @@ import styled from 'styled-components';
 
 type AnchorProps = {
   children?: ReactNode;
+  fullWidth?: boolean;
   href: string;
 };
 
-export default function Anchor({ children, href }: AnchorProps) {
+export default function Anchor({ children, href, fullWidth = true }: AnchorProps) {
   return (
     <Link href={href}>
-      <StyledLink href={href}>{children}</StyledLink>
+      <StyledLink href={href} fullWidth={fullWidth}>{children}</StyledLink>
     </Link>
   );
 }
 
-const StyledLink = styled.a`
+type StyleProps = {
+  fullWidth: boolean;
+}
+
+const StyledLink = styled.a<StyleProps>`
   cursor: pointer;
   display: inline-block;
   position: relative;
   text-decoration: none;
-  width: 100%;
+  ${({ fullWidth }) => fullWidth && 'width: 100%;'}
   color: ${({theme}) => theme.fontColor};
   &:after {
     content: '';
