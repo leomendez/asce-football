@@ -124,13 +124,12 @@ export default function Table<T extends object>({ data, columns, pagination = fa
 
 const TableHeader = styled.th`
   padding: 0.5em 0.4em;
-  background-color: ${({ theme }) => theme.secondary + '90'};
-  color: ${honeydew};
+  background-color: ${({ theme }) => theme.primary + '90'};
 `;
 
 const TableCell = styled.td`
   padding: 0.2em;
-  border-bottom: 2px solid ${({ theme }) => theme.secondary};
+  border-bottom: 2px solid ${({ theme }) => theme.primary};
 `;
 
 const TableRow = styled.tr`

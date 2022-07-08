@@ -41,9 +41,13 @@ const Title = styled.span`
 const Links = styled.div`
   font-weight: 700;
   display: flex;
-  gap: 20px;
-  padding-right: 20px;
-  border-right: 2px solid ${({ theme }) => theme.secondary};
+  justify-content: center;
+  align-items: center;
+  > a {
+    padding-right: 2em;
+    padding-left: 2em;
+    border-right: 2px solid ${({ theme }) => theme.secondary};
+  }
 `;
 
 const RightSection = styled.div`

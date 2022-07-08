@@ -11,15 +11,12 @@ import type { LeagueResponse, Season } from '../types';
 import { leagues as mockLeagues } from '../__mocks__/data/leagues';
 
 type Props = {
-  leagues: LeagueResponse[];
 };
 
-const Leagues: NextPage<Props> = ({ leagues }) => {
+const Leagues: NextPage<Props> = () => {
   const [query, setQuery] = useState('');
 
-  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => getLeagues(), {
-    initialData: leagues,
-  });
+  const leagueQuery = useQuery<LeagueResponse[], Error>('leagues', () => getLeagues());
 
   let filteredLeagues = leagueQuery?.data || mockLeagues;
 

@@ -18,15 +18,6 @@ const Home: NextPage<HomeProps> = ({ theme }) => {
           height="100px"
         />
         <h1>Football</h1>
-        {/* <HeadingText>
-                    Browse through the stats for all football{' '}
-                    <Anchor href="/leagues">
-                        <PageLink>
-                            Leagues
-                        </PageLink>
-                    </Anchor>{' '}
-                    in the world
-                </HeadingText> */}
       </Title>
       <Content>
         Browse through the stats for all football{' '}
@@ -58,6 +49,9 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  > span {
+    margin-right: 15px !important;
+  }
 `;
 
 const PageLink = styled.span`

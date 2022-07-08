@@ -1,13 +1,15 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type { Column } from 'react-table';
 import styled from 'styled-components';
 import { getLeagues } from '../../../api/leagues';
 import { getStandingsByLeagueIdAndSeason } from '../../../api/standings';
-import { Select, Table, TeamLogo } from '../../../components';
+import { Select, Table } from '../../../components';
 import { LeagueResponse, Standing, StandingsResponse } from '../../../types';
+import { underline } from '../../../utils/animations';
 
 type LeagueProps = {
   standings: StandingsResponse;
@@ -42,21 +44,22 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
       standings?.forEach((standingList) => {
         const stan = standingList.map((standing) => ({
           team: (
-            <Team onClick={() => handleRowClick(standing.team.id)}>
-              <Rank>{standing.rank}</Rank>
-              {/* <RankSeparator /> */}
-              <div>
-                <Logo>
-                  <Image
-                    src={standing?.team?.logo || '/fake'}
-                    width="18px"
-                    height="18px"
-                    alt={`${standing?.team?.id}-logo`}
-                  />
-                </Logo>
-                {standing?.team?.name}
-              </div>
-            </Team>
+            <Link href={`/team/${standing?.team?.id}`}>
+              <Team>
+                <Rank>{standing.rank}</Rank>
+                <div>
+                  <Logo>
+                    <Image
+                      src={standing?.team?.logo || '/fake'}
+                      width="18px"
+                      height="18px"
+                      alt={`${standing?.team?.id}-logo`}
+                    />
+                  </Logo>
+                  {standing?.team?.name}
+                </div>
+              </Team>
+            </Link>
           ),
           PL: <CellItem>{standing?.all?.played}</CellItem>,
           W: <CellItem>{standing?.all?.win}</CellItem>,
@@ -69,7 +72,7 @@ const LeaguePage = ({ standings, league }: LeagueProps) => {
       });
       return data;
     },
-    [handleRowClick]
+    []
   );
 
   const dataList = useMemo(
@@ -202,15 +205,13 @@ const LeagueName = styled.div`
   gap: 5px;
 `;
 
-const Team = styled.div`
+const Team = styled.a`
+  ${({ theme }) => underline(theme)}
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 0.2em;
   gap: 20px;
-  &:hover {
-    font-weight: 700;
-  }
 `;
 
 const Logo = styled.span`
@@ -248,4 +249,4 @@ const CellItem = styled.span`
 const Rank = styled.b`
   text-align: center;
   width: 1em;
-`
+`;
