@@ -80,13 +80,13 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1em 1em 1em 0;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.background};
   cursor: pointer;
   border-radius: 5px;
   transition: 200ms all;
+  box-shadow: ${({ theme }) => theme.primary + '80'} 0px 5px 15px;
   :hover {
-    border: solid 3px ${({ theme }) => theme.fontColor};
-    transition: 200ms all;
+    transform: scale(1.05);
   }
   @media screen and (max-width: 670px) {
     margin: 1em 0;
@@ -132,6 +132,7 @@ const TeamName = styled.span`
 const Score = styled.span`
   display: flex;
   justify-content: flex-end;
+  min-width: 1em;
 `;
 
 const TimeSection = styled.div`

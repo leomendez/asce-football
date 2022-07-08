@@ -1,17 +1,16 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
-import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { GetServerSideProps } from 'next';
+import { useState } from 'react';
 import styled from 'styled-components';
 import {
   getLastFixturesByTeamId,
-  getNextFixturesByTeamId,
+  getNextFixturesByTeamId
 } from '../../api/fixtures';
 import { getTeamById } from '../../api/teams';
 import Fixtures from '../../components/Fixtures/Fixtures';
 import { TeamInfo, TeamLogo } from '../../components/index';
 import { Team, Venue } from '../../types';
 import { FixtureResponse } from '../../types/Fixture';
+import { underline } from '../../utils/animations';
 import { fixtures as mockFixtures } from '../../__mocks__/data/fixtures';
 import { teams } from '../../__mocks__/data/teams';
 
@@ -59,7 +58,7 @@ const TeamPage = ({ team, venue, fixtures, results }: TeamProps) => {
   };
 
   return (
-    <div>
+    <TeamContainer>
       <Title>
         <TeamLogo src={team.logo} alt={`team-logo${team.name}`} />
         <TeamName>{team.name}</TeamName>
@@ -86,7 +85,7 @@ const TeamPage = ({ team, venue, fixtures, results }: TeamProps) => {
       </Tabs>
       <hr />
       {getBody()}
-    </div>
+    </TeamContainer>
   );
 };
 
@@ -117,6 +116,10 @@ type StyleProps = {
   active: boolean;
 };
 
+const TeamContainer = styled.div`
+  margin: 2em;
+`
+
 const Title = styled.div`
   display: flex;
   gap: 2em;
@@ -141,26 +144,9 @@ const Tabs = styled.div`
 
 const Tab = styled.div<StyleProps>`
   cursor: pointer;
-  display: inline-block;
-  position: relative;
   ${({ active, theme }) =>
     active && `border-bottom: solid 3px ${theme.secondary};`}
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    background-color: ${({ theme }) => theme.secondary};
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-  }
-  &:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
+  ${({ active, theme }) => !active && underline(theme, '0')}
 `;
 
 export default TeamPage;

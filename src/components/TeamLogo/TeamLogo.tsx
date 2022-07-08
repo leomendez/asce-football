@@ -23,7 +23,14 @@ export default function TeamLogo({
 }
 
 const Logo = styled.div`
-  border: 1px solid ${({ theme }) => theme.fontColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
-  padding: 0.5em;
+  padding: 0.6em;
+  box-shadow: ${({ theme }) => theme.primary + '80'} 0px 5px 15px;
+  transition: all 400ms;
+  :hover {
+    transform: scale(1.1); 
+  }
 `;
