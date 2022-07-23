@@ -145,5 +145,5 @@ const TimeSection = styled.div`
   padding: 0 1em;
   font-size: .8em;
   font-weight: 600;
-  width: 100%:
+  width: 100%;
 `;
