@@ -12,6 +12,14 @@ type Props = {
   teamId: number;
 };
 
+function checkLastTransfers(lastTransfer: Transfer) {
+  const type = lastTransfer?.type?.toLocaleUpperCase();
+  const transferYear = moment(lastTransfer.date).year();
+  const currentYear = moment().year();
+  
+  return type !== 'N/A' && (transferYear === currentYear || transferYear === (currentYear - 1));
+}
+
 export default function Transfers({ teamId }: Props) {
   const { data, isLoading, isError } = useQuery(['transfers'], () => getTransfersByTeamId(teamId));
   // const { data, isLoading, isError } = useQuery(['transfers'], () => mockTransfers);
@@ -23,8 +31,9 @@ export default function Transfers({ teamId }: Props) {
       (a, b) => new Date(b.transfers[0].date).valueOf() - new Date(a.transfers[0].date).valueOf()
     );
 
-    transfers = sortedTransfers.slice(0, 10);
-    console.log({ transfers });
+    const filtered = sortedTransfers.filter((transferResponse) => checkLastTransfers(transferResponse.transfers[0]));
+
+    transfers = filtered.slice(0, 10);
   }
 
   if (isError) return <div>Something went wrong</div>;
@@ -36,11 +45,13 @@ export default function Transfers({ teamId }: Props) {
       {transfers.map((transfer, index) => {
         const lastTransfer = transfer.transfers[0];
         const player = transfer.player;
-        const date = moment(lastTransfer.date).tz('America/Los_Angeles').format('mm/DD/yyyy z');
+        const date = moment(lastTransfer.date).tz('America/Los_Angeles').format('MM/DD/yyyy z');
         return (
           <Box key={`transfer-${index}`}>
             <Status>
-              <div><b>DONE DEAL</b></div>
+              <div>
+                <b>DONE DEAL</b>
+              </div>
               <div>{date}</div>
             </Status>
             <Details>
@@ -48,7 +59,10 @@ export default function Transfers({ teamId }: Props) {
                 <Image src={lastTransfer.teams.out.logo || ''} width="35px" height="35px" alt="home-logo" />
                 <span>{lastTransfer.teams.out.name}</span>
               </Team>
-              <Player><span>{player.name}</span><FaArrowRight /></Player>
+              <Player>
+                <span>{player.name}</span>
+                <FaArrowRight />
+              </Player>
               <Team>
                 <Image src={lastTransfer.teams.in.logo || ''} width="35px" height="35px" alt="home-logo" />
                 <span>{lastTransfer.teams.in.name}</span>
@@ -116,6 +130,7 @@ const Team = styled.div`
   justify-content: center;
   text-align: center;
   gap: 1em;
+  flex: 1 1 0px;
 `;
 
 const Player = styled.div`
@@ -126,4 +141,5 @@ const Player = styled.div`
   text-align: center;
   font-weight: 600;
   gap: 0.5em;
+  flex: 1 1 0px;
 `;
